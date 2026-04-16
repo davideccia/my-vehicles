@@ -2,10 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Models\Vehicle;
+use App\Models\VehicleRefuel;
+use App\Models\VehicleServiceType;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SettingsTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_settings_page_is_accessible(): void
     {
         $this->withoutVite();
@@ -93,5 +99,23 @@ class SettingsTest extends TestCase
         $response = $this->post('/settings/theme', []);
 
         $response->assertSessionHasErrors('theme');
+    }
+
+    public function test_reset_db_truncates_and_reseeds(): void
+    {
+        $vehicle = Vehicle::factory()->create();
+        VehicleRefuel::factory()->create(['vehicle_id' => $vehicle->id]);
+
+        $response = $this->post('/settings/reset');
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success', 'settings.reset_success');
+
+        // Factory-created vehicle should be gone after truncation
+        $this->assertDatabaseMissing('vehicles', ['id' => $vehicle->id]);
+
+        // Seeder should have created new data
+        $this->assertGreaterThan(0, Vehicle::count(), 'Seeder should create vehicles');
+        $this->assertGreaterThan(0, VehicleServiceType::count(), 'Seeder should create service types');
     }
 }
