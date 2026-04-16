@@ -63,6 +63,10 @@ function onVehicleFilter(value: string | null): void {
             @update:model-value="onVehicleFilter"
         />
 
+        <v-btn color="primary" block class="mb-4" prepend-icon="mdi-plus" @click="router.visit(create.url())">
+            {{ t('common.add') }}
+        </v-btn>
+
         <v-alert
             v-if="reminders.some(r => r.is_overdue)"
             type="error"
@@ -72,13 +76,11 @@ function onVehicleFilter(value: string | null): void {
             {{ t('reminders.overdue_alert') }}
         </v-alert>
 
-        <v-btn color="primary" block class="mb-4" prepend-icon="mdi-plus" @click="router.visit(create.url())">
-            {{ t('common.add') }}
-        </v-btn>
-
         <v-alert v-if="reminders.length === 0" type="info" variant="tonal">
             {{ t('reminders.no_reminders') }}
         </v-alert>
+
+        <v-divider class="pb-4"/>
 
         <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3 d-flex" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
             <div class="flex-grow-1" style="min-width: 0;">
