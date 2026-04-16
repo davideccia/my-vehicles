@@ -122,6 +122,7 @@ export default {
         sections: {
             general: 'General',
             appearance: 'Appearance',
+            data: 'Data',
         },
         language: 'Language',
         theme: 'Theme',
@@ -132,7 +133,12 @@ export default {
         language_en: '🇬🇧English',
         saved: 'Settings saved.',
         export_db: 'Export database',
+        export_db_desc: 'Download a backup of all your data.',
         import_db: 'Import database',
+        import_db_desc: 'Restore data from a backup file.',
+        import_confirm: 'All existing data will be replaced. Continue?',
         import_success: 'Database imported successfully.',
+        import_error: 'Invalid backup file.',
+        export_error: 'Export failed.',
     },
 } as const;

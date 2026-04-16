@@ -1,0 +1,11 @@
+{
+    "version": "1.0",
+    "project_type": "brownfield",
+    "is_brownfield": true,
+    "needs_codebase_map": false,
+    "research_enabled": false,
+    "discuss_phase_enabled": false,
+    "languages": ["php", "typescript"],
+    "frameworks": ["laravel", "vue", "inertia", "vuetify"],
+    "created_at": "2026-04-16"
+}

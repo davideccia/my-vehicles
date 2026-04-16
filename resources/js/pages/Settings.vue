@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { DEFAULT_PRIMARY, useAppTheme } from '@/composables/useAppTheme';
-import { color as colorRoute, locale, theme as themeRoute } from '@/routes/settings';
+import { color as colorRoute, exportMethod, importMethod, locale, theme as themeRoute } from '@/routes/settings';
 
 const props = defineProps<{
     locales: { value: string; label: string }[];
@@ -15,6 +15,9 @@ const props = defineProps<{
 
 const { t } = useI18n();
 const { applyPrimaryColor, applyColorScheme } = useAppTheme();
+const page = usePage<{ flash?: { success?: string }; errors?: { file?: string } }>();
+
+// ── Appearance ────────────────────────────────────────────────────────────────
 
 const selectedTheme = ref<string>(props.colorScheme || 'dark');
 
@@ -47,6 +50,74 @@ watch(selectedColor, (newColor: string) => {
 
 function onLocaleChange(value: string): void {
     router.post(locale.url(), { locale: value });
+}
+
+// ── Data import / export ──────────────────────────────────────────────────────
+
+const fileInput = ref<HTMLInputElement | null>(null);
+const importLoading = ref(false);
+const showConfirm = ref(false);
+const pendingFile = ref<File | null>(null);
+
+const snackbar = ref(false);
+const snackbarMessage = ref('');
+const snackbarColor = ref('success');
+
+const flashSuccess = computed(() => page.props.flash?.success);
+const flashError = computed(() => page.props.errors?.file);
+
+watch(flashSuccess, (val) => {
+    if (val) {
+        snackbarMessage.value = t(val);
+        snackbarColor.value = 'success';
+        snackbar.value = true;
+    }
+});
+
+watch(flashError, (val) => {
+    if (val) {
+        snackbarMessage.value = t(val);
+        snackbarColor.value = 'error';
+        snackbar.value = true;
+    }
+});
+
+function onExport(): void {
+    window.location.href = exportMethod.url();
+}
+
+function onImportClick(): void {
+    fileInput.value?.click();
+}
+
+function onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    pendingFile.value = file;
+    showConfirm.value = true;
+    input.value = '';
+}
+
+function confirmImport(): void {
+    if (!pendingFile.value) return;
+    showConfirm.value = false;
+    importLoading.value = true;
+
+    const formData = new FormData();
+    formData.append('file', pendingFile.value);
+    pendingFile.value = null;
+
+    router.post(importMethod.url(), formData, {
+        forceFormData: true,
+        preserveScroll: true,
+        onFinish: () => { importLoading.value = false; },
+    });
+}
+
+function cancelImport(): void {
+    pendingFile.value = null;
+    showConfirm.value = false;
 }
 </script>
 
@@ -106,5 +177,64 @@ function onLocaleChange(value: string): void {
             hide-inputs
             width="100%"
         />
+
+        <v-divider class="my-6" />
+
+        <h3 class="text-h5 mb-6">{{ t('settings.sections.data') }}</h3>
+
+        <v-list lines="two" class="pa-0">
+            <v-list-item
+                :title="t('settings.export_db')"
+                :subtitle="t('settings.export_db_desc')"
+                prepend-icon="mdi-database-export-outline"
+                rounded="xl"
+                class="mb-2"
+                @click="onExport"
+            >
+                <template #append>
+                    <v-icon>mdi-chevron-right</v-icon>
+                </template>
+            </v-list-item>
+
+            <v-list-item
+                :title="t('settings.import_db')"
+                :subtitle="t('settings.import_db_desc')"
+                prepend-icon="mdi-database-import-outline"
+                rounded="xl"
+                :disabled="importLoading"
+                @click="onImportClick"
+            >
+                <template #append>
+                    <v-progress-circular v-if="importLoading" indeterminate size="20" width="2" />
+                    <v-icon v-else>mdi-chevron-right</v-icon>
+                </template>
+            </v-list-item>
+        </v-list>
+
+        <!-- Hidden file input -->
+        <input
+            ref="fileInput"
+            type="file"
+            accept=".json"
+            class="d-none"
+            @change="onFileSelected"
+        />
     </v-container>
+
+    <!-- Confirm dialog -->
+    <v-dialog v-model="showConfirm" max-width="360">
+        <v-card rounded="xl">
+            <v-card-text class="pt-6">{{ t('settings.import_confirm') }}</v-card-text>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn variant="text" @click="cancelImport">{{ t('common.cancel') }}</v-btn>
+                <v-btn color="error" variant="tonal" @click="confirmImport">{{ t('settings.import_db') }}</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <!-- Snackbar feedback -->
+    <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000" location="bottom">
+        {{ snackbarMessage }}
+    </v-snackbar>
 </template>

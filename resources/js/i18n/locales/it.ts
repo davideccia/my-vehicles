@@ -123,6 +123,7 @@ export default {
         sections: {
             general: 'Generali',
             appearance: 'Aspetto',
+            data: 'Dati',
         },
         language: 'Lingua',
         theme: 'Tema',
@@ -133,7 +134,12 @@ export default {
         language_en: '🇬🇧Inglese',
         saved: 'Impostazioni salvate.',
         export_db: 'Esporta database',
+        export_db_desc: 'Scarica un backup di tutti i tuoi dati.',
         import_db: 'Importa database',
+        import_db_desc: 'Ripristina i dati da un file di backup.',
+        import_confirm: 'Tutti i dati esistenti verranno sostituiti. Continuare?',
         import_success: 'Database importato con successo.',
+        import_error: 'File di backup non valido.',
+        export_error: 'Esportazione fallita.',
     },
 } as const;
