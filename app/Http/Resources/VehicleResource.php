@@ -20,6 +20,7 @@ class VehicleResource extends JsonResource
             'model' => $this->resource->model,
             'year' => $this->resource->year,
             'purchase_date' => $this->resource->purchase_date?->format('Y-m-d'),
+            'current_odometer' => $this->resource->currentOdometer(),
             'full_name' => $this->resource->full_name,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,

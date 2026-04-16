@@ -92,7 +92,7 @@ export default {
         delete: 'Delete',
         vehicle: 'Vehicle',
         type: 'Service type',
-        every: 'Every (km)',
+        every: 'Every',
         all_vehicles: 'All vehicles',
         no_reminders: 'No reminders registered.',
         save: 'Save',

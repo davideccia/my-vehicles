@@ -23,6 +23,7 @@ class VehicleServiceReminderResource extends JsonResource
             'latest_vehicle_service' => $this->resource->vehicle?->latestVehicleService,
             'current_vehicle_odometer' => $this->resource->vehicle?->currentOdometer(),
             'last_vehicle_service_odometer' => $this->resource->latestVehicleServiceOdometer(),
+            'recommended_vehicle_service_odometer' => $this->resource->recommendedVehicleServiceOdometer(),
             'overdue_odometer_diff' => $this->resource->overdueOdometerDiff(),
             'is_overdue' => $this->resource->isOverDue(),
             'created_at' => $this->resource->created_at,

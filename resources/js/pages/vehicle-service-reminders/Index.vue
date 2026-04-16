@@ -87,16 +87,12 @@ function onVehicleFilter(value: string | null): void {
                     {{ reminder.vehicle_service_type?.label }}
                 </v-card-title>
                 <v-card-subtitle v-if="reminder.vehicle" class="text-wrap">
+                    <div class="text-caption text-medium-emphasis">({{ t('reminders.every') + ' ' + reminder.every }} km)</div>
+                </v-card-subtitle>
+                <v-card-subtitle v-if="reminder.vehicle" class="text-wrap">
                     {{ reminder.vehicle.brand }} {{ reminder.vehicle.model }} ({{ reminder.vehicle.plate_number }})
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-row density="comfortable">
-                        <v-col cols="12">
-                            <div class="text-caption text-medium-emphasis">{{ t('reminders.every') }}</div>
-                            <div class="font-weight-medium">{{ reminder.every }} km</div>
-                        </v-col>
-                    </v-row>
-                    <v-divider class="my-2" />
                     <div class="text-caption text-medium-emphasis mb-1"></div>
                     <template v-if="reminder.latest_vehicle_service">
                         <v-row density="comfortable">
@@ -105,25 +101,26 @@ function onVehicleFilter(value: string | null): void {
                                 <div class="font-weight-medium">{{ formatDate(reminder.latest_vehicle_service.date) }}</div>
                             </v-col>
                             <v-col cols="6">
-                                <div class="text-caption text-medium-emphasis">{{ t('services.total_paid') }}</div>
+                                <div class="text-caption text-medium-emphasis">{{ t('reminders.total_paid') }}</div>
                                 <div class="font-weight-medium">€ {{ reminder.latest_vehicle_service.total_paid }}</div>
                             </v-col>
+                            <v-divider/>
                             <v-col cols="6">
-                                <div class="text-caption text-medium-emphasis">{{ t('services.odometer') }}</div>
+                                <div class="text-caption text-medium-emphasis">{{ t('reminders.current_vehicle_odometer') }}</div>
+                                <div class="font-weight-medium">{{ reminder.current_vehicle_odometer }} km</div>
+                            </v-col>
+                            <v-col cols="6">
+                                <div class="text-caption text-medium-emphasis">{{ t('reminders.last_vehicle_service_odometer') }}</div>
                                 <div class="font-weight-medium">{{ reminder.last_vehicle_service_odometer }} km</div>
                             </v-col>
                             <v-col cols="6">
-                                <div class="text-caption text-medium-emphasis">{{ t('services.current_vehicle_odometer') }}</div>
-                                <div class="font-weight-medium">{{ reminder.current_vehicle_odometer }} km</div>
+                                <div class="text-caption text-medium-emphasis">{{ t('reminders.recommended_vehicle_service_odometer') }}</div>
+                                <div class="font-weight-medium">{{ reminder.recommended_vehicle_service_odometer }} km</div>
                             </v-col>
-                            <v-divider/>
-                            <v-col v-if="reminder.is_overdue" cols="12" class="pa-2 text-center">
-                                <div class="text-caption text-medium-emphasis">{{ t('services.overdue_odometer_diff_minus') }}</div>
-                                <div class="font-weight-medium">{{ reminder.overdue_odometer_diff }} km</div>
-                            </v-col>
-                            <v-col v-else cols="12" class="rounded pa-2 text-center">
-                                <div class="text-caption text-medium-emphasis">{{ t('services.overdue_odometer_diff_plus') }}</div>
-                                <div class="font-weight-medium">{{ reminder.overdue_odometer_diff }} km</div>
+                            <v-col cols="6" class="pa-4">
+                                <v-chip variant="elevated" label :color="reminder.is_overdue ? 'red-darken-4' : undefined" size="small">
+                                    <div class="font-weight-bold">{{ reminder.overdue_odometer_diff }} km</div>
+                                </v-chip>
                             </v-col>
                         </v-row>
                     </template>

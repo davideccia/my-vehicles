@@ -56,6 +56,7 @@ function doDelete(): void {
                 </v-card-text>
                 <v-card-title class="text-wrap">{{ vehicle.brand }} {{ vehicle.model }}</v-card-title>
                 <v-card-subtitle class="text-wrap pb-3">{{ vehicle.year }}</v-card-subtitle>
+                <v-card-subtitle class="text-wrap pb-3">{{ vehicle.current_odometer }} km</v-card-subtitle>
                 <v-card-text v-if="vehicle.purchase_date">
                     {{ t('vehicles.purchase_date') }}: {{ formatDate(vehicle.purchase_date) }}
                 </v-card-text>

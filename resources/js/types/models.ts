@@ -6,6 +6,7 @@ export type Vehicle = {
     year: number;
     purchase_date: string | null;
     full_name: string;
+    current_odometer: string;
     created_at: string;
     updated_at: string;
 };
@@ -58,6 +59,7 @@ export type VehicleServiceReminder = {
     every: number;
     current_vehicle_odometer: number;
     last_vehicle_service_odometer: number;
+    recommended_vehicle_service_odometer: number;
     overdue_odometer_diff: number;
     is_overdue: boolean;
     created_at: string;

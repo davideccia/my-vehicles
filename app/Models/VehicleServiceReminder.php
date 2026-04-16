@@ -28,16 +28,25 @@ class VehicleServiceReminder extends Model
 
     public function latestVehicleServiceOdometer(): int
     {
-        return $this->vehicleServiceType?->latestVehicleService?->odometer ?? 0;
+        return VehicleService::query()
+            ->where('vehicle_services.vehicle_id', $this->vehicle_id)
+            ->where('vehicle_services.vehicle_service_type_id', $this->vehicle_service_type_id)
+            ->orderByDesc('vehicle_services.date')
+            ->first()?->odometer ?? 0;
+    }
+
+    public function recommendedVehicleServiceOdometer(): int
+    {
+        return $this->latestVehicleServiceOdometer() + $this->every;
     }
 
     public function overdueOdometerDiff(): int
     {
-        return $this->vehicle->currentOdometer() - $this->latestVehicleServiceOdometer();
+        return $this->recommendedVehicleServiceOdometer() - $this->vehicle->currentOdometer();
     }
 
     public function isOverDue(): bool
     {
-        return ($this->vehicleServiceType?->latestVehicleService !== null) && ($this->overdueOdometerDiff() >= $this->every);
+        return $this->vehicle->currentOdometer() >= $this->recommendedVehicleServiceOdometer();
     }
 }
