@@ -21,7 +21,7 @@ decisions:
 metrics:
   duration: "~15 minutes"
   completed_date: "2026-04-16"
-  tasks_completed: 1
+  tasks_completed: 2
   tasks_total: 2
   files_changed: 1
 ---
@@ -36,11 +36,11 @@ metrics:
 |------|------|--------|-------|
 | 1 | Add click counter, modal state, and reset methods to Settings.vue | 4c1932c | resources/js/pages/Settings.vue |
 
-## Tasks Pending Human Verification
+## Tasks Completed (continued)
 
 | Task | Name | Status |
 |------|------|--------|
-| 2 | Verify easter egg flow end-to-end | CHECKPOINT — awaiting human verification |
+| 2 | Verify easter egg flow end-to-end | APPROVED — human verified |
 
 ## What Was Built
 
@@ -86,24 +86,7 @@ No new threat surface. The endpoint is intentionally unguarded per plan threat m
 
 ## Checkpoint State
 
-**Task 2 is a `checkpoint:human-verify` gate.** Human verification is required before this plan is marked complete.
-
-### What to Verify
-
-1. Run `composer run dev`
-2. Navigate to Settings page
-3. Click the "Settings" title 5 times quickly (within 2 seconds between clicks)
-4. Verify: confirmation modal appears with warning text
-5. Click "Cancel" — verify modal closes, no changes
-6. Repeat 5 clicks to reopen
-7. Click "Factory reset" (red button) — verify loading spinner appears
-8. Verify: success snackbar "Database reset successfully." appears
-9. Navigate to Vehicles — verify seed data is present
-10. Switch locale to Italian, repeat steps 3-8 — verify Italian strings
-
-### Resume Signal
-
-Type "approved" or describe any issues found.
+**Task 2 APPROVED — human verified 2026-04-16.** Easter egg flow confirmed end-to-end including the users table fix (commit 6ff0132).
 
 ## Self-Check: PASSED
 
