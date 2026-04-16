@@ -5,10 +5,14 @@
     "guidelines": true,
     "mcp": true,
     "nightwatch_mcp": false,
+    "packages": [
+        "nativephp/mobile"
+    ],
     "sail": false,
     "skills": [
         "laravel-best-practices",
         "wayfinder-development",
-        "inertia-vue-development"
+        "inertia-vue-development",
+        "nativephp-mobile"
     ]
 }
