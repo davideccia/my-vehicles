@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\Locale;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\App;
@@ -130,5 +131,24 @@ class SettingsController extends Controller
         DB::statement('PRAGMA foreign_keys = ON');
 
         return redirect()->back()->with('success', 'settings.import_success');
+    }
+
+    public function resetDb(): RedirectResponse
+    {
+        DB::statement('PRAGMA foreign_keys = OFF');
+
+        DB::transaction(function () {
+            DB::table('vehicle_service_reminders')->delete();
+            DB::table('vehicle_services')->delete();
+            DB::table('vehicle_refuels')->delete();
+            DB::table('vehicles')->delete();
+            DB::table('vehicle_service_types')->delete();
+        });
+
+        DB::statement('PRAGMA foreign_keys = ON');
+
+        Artisan::call('db:seed');
+
+        return redirect()->back()->with('success', 'settings.reset_success');
     }
 }

@@ -140,5 +140,9 @@ export default {
         import_success: 'Database imported successfully.',
         import_error: 'Invalid backup file.',
         export_error: 'Export failed.',
+        reset_db: 'Factory reset',
+        reset_db_desc: 'Wipe all data and restore defaults.',
+        reset_confirm: 'This will permanently delete ALL data and restore the default seed. This action cannot be undone.',
+        reset_success: 'Database reset successfully.',
     },
 } as const;

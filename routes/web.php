@@ -28,3 +28,4 @@ Route::post('/settings/color', [SettingsController::class, 'updateColor'])->name
 Route::post('/settings/theme', [SettingsController::class, 'updateTheme'])->name('settings.theme');
 Route::get('/settings/export', [SettingsController::class, 'export'])->name('settings.export');
 Route::post('/settings/import', [SettingsController::class, 'import'])->name('settings.import');
+Route::post('/settings/reset', [SettingsController::class, 'resetDb'])->name('settings.reset');

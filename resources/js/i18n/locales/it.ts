@@ -141,5 +141,9 @@ export default {
         import_success: 'Database importato con successo.',
         import_error: 'File di backup non valido.',
         export_error: 'Esportazione fallita.',
+        reset_db: 'Reset di fabbrica',
+        reset_db_desc: 'Cancella tutti i dati e ripristina i valori predefiniti.',
+        reset_confirm: "Questa operazione eliminera' TUTTI i dati e ripristinera' i dati predefiniti. L'operazione non puo' essere annullata.",
+        reset_success: 'Database reimpostato con successo.',
     },
 } as const;
