@@ -80,16 +80,16 @@ function onVehicleFilter(value: string | null): void {
             {{ t('reminders.no_reminders') }}
         </v-alert>
 
-        <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3 d-flex" :color="reminder.is_overdue ? 'red-darken-4' : undefined" rounded="lg">
+        <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3 d-flex" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
             <div class="flex-grow-1" style="min-width: 0;">
                 <v-card-title class="d-flex align-center ga-2 text-wrap">
                     <v-icon v-if="reminder.vehicle_service_type?.icon">{{ reminder.vehicle_service_type.icon }}</v-icon>
                     {{ reminder.vehicle_service_type?.label }}
                 </v-card-title>
                 <v-card-subtitle v-if="reminder.vehicle" class="text-wrap">
-                    <div class="text-caption text-medium-emphasis">({{ t('reminders.every') + ' ' + reminder.every }} km)</div>
+                    <div class="text-caption text-white pb-1">({{ t('reminders.every') + ' ' + reminder.every }} km)</div>
                 </v-card-subtitle>
-                <v-card-subtitle v-if="reminder.vehicle" class="text-wrap">
+                <v-card-subtitle v-if="reminder.vehicle" class="text-white text-wrap">
                     {{ reminder.vehicle.brand }} {{ reminder.vehicle.model }} ({{ reminder.vehicle.plate_number }})
                 </v-card-subtitle>
                 <v-card-text>
@@ -118,7 +118,7 @@ function onVehicleFilter(value: string | null): void {
                                 <div class="font-weight-medium">{{ reminder.recommended_vehicle_service_odometer }} km</div>
                             </v-col>
                             <v-col cols="6" class="pa-4">
-                                <v-chip variant="elevated" label :color="reminder.is_overdue ? 'red-darken-4' : undefined" size="small">
+                                <v-chip variant="elevated" label :color="reminder.is_overdue ? 'error' : undefined" size="small">
                                     <div class="font-weight-bold">{{ reminder.overdue_odometer_diff }} km</div>
                                 </v-chip>
                             </v-col>
