@@ -4,7 +4,7 @@ import { useDebounceFn } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { DEFAULT_PRIMARY, useAppTheme } from '@/composables/useAppTheme';
-import { color as colorRoute, exportMethod, importMethod, locale, theme as themeRoute } from '@/routes/settings';
+import { color as colorRoute, exportMethod, importMethod, reset as resetDb, locale, theme as themeRoute } from '@/routes/settings';
 
 const props = defineProps<{
     locales: { value: string; label: string }[];
@@ -93,14 +93,21 @@ function onImportClick(): void {
 function onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
-    if (!file) return;
+
+    if (!file) {
+return;
+}
+
     pendingFile.value = file;
     showConfirm.value = true;
     input.value = '';
 }
 
 function confirmImport(): void {
-    if (!pendingFile.value) return;
+    if (!pendingFile.value) {
+return;
+}
+
     showConfirm.value = false;
     importLoading.value = true;
 
@@ -111,7 +118,9 @@ function confirmImport(): void {
     router.post(importMethod.url(), formData, {
         forceFormData: true,
         preserveScroll: true,
-        onFinish: () => { importLoading.value = false; },
+        onFinish: () => {
+ importLoading.value = false; 
+},
     });
 }
 
@@ -119,13 +128,55 @@ function cancelImport(): void {
     pendingFile.value = null;
     showConfirm.value = false;
 }
+
+// ── Factory reset easter egg ──────────────────────────────────────────────────
+
+const resetLoading = ref(false);
+const showResetConfirm = ref(false);
+const resetClickCount = ref(0);
+let resetClickTimer: ReturnType<typeof setTimeout> | null = null;
+
+function onTitleClick(): void {
+    resetClickCount.value++;
+
+    if (resetClickTimer) {
+clearTimeout(resetClickTimer);
+}
+
+    if (resetClickCount.value >= 5) {
+        resetClickCount.value = 0;
+        resetClickTimer = null;
+        showResetConfirm.value = true;
+
+        return;
+    }
+
+    resetClickTimer = setTimeout(() => {
+        resetClickCount.value = 0;
+    }, 2000);
+}
+
+function cancelReset(): void {
+    showResetConfirm.value = false;
+}
+
+function confirmReset(): void {
+    showResetConfirm.value = false;
+    resetLoading.value = true;
+    router.post(resetDb.url(), {}, {
+        preserveScroll: true,
+        onFinish: () => {
+            resetLoading.value = false;
+        },
+    });
+}
 </script>
 
 <template>
     <Head :title="t('settings.title')" />
 
     <v-container>
-        <h1 class="text-h5 mb-6">{{ t('settings.title') }}</h1>
+        <h1 class="text-h5 mb-6" @click="onTitleClick">{{ t('settings.title') }}</h1>
 
         <v-divider class="my-4" />
 
@@ -229,6 +280,18 @@ function cancelImport(): void {
                 <v-spacer />
                 <v-btn variant="text" @click="cancelImport">{{ t('common.cancel') }}</v-btn>
                 <v-btn color="error" variant="tonal" @click="confirmImport">{{ t('settings.import_db') }}</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <!-- Reset confirm dialog -->
+    <v-dialog v-model="showResetConfirm" max-width="360">
+        <v-card rounded="xl">
+            <v-card-text class="pt-6">{{ t('settings.reset_confirm') }}</v-card-text>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn variant="text" @click="cancelReset">{{ t('common.cancel') }}</v-btn>
+                <v-btn color="error" variant="tonal" :loading="resetLoading" @click="confirmReset">{{ t('settings.reset_db') }}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
