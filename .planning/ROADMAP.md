@@ -9,7 +9,7 @@
 
 Plans:
 - [x] 01-01-PLAN.md — Backend route, controller method, i18n strings, Wayfinder generation, and feature test
-- [ ] 01-02-PLAN.md — Frontend 5-click easter egg trigger, confirmation modal, and reset flow in Settings.vue
+- [x] 01-02-PLAN.md — Frontend 5-click easter egg trigger, confirmation modal, and reset flow in Settings.vue
 
 ### Tasks
 
