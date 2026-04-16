@@ -29,3 +29,9 @@ Add a developer easter egg to `Settings.vue`: clicking the page title (`h1`) 5 t
 4. Backend truncates all app tables and runs the full seeder
 5. Counter resets after the modal opens (regardless of outcome)
 6. Both IT and EN strings are correct
+
+## Current State
+
+Phase 01 complete — 2026-04-16. All success criteria verified by human testing.
+
+Notable: backend truncates 6 tables (5 app tables + `users`) to ensure idempotent reseeding. Users table was not in the original plan but was required because `DatabaseSeeder` creates a user with a unique email.
