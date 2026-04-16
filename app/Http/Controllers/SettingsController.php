@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\Locale;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
 use Inertia\Inertia;
@@ -75,10 +75,10 @@ class SettingsController extends Controller
         ];
 
         $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        $filename = 'my-vehicles-' . now()->format('Y-m-d') . '.json';
+        $filename = 'my-vehicles-'.now()->format('Y-m-d').'.json';
 
         if (function_exists('nativephp_call')) {
-            $path = storage_path('app/private/' . $filename);
+            $path = storage_path('app/private/'.$filename);
             file_put_contents($path, $json);
             Share::file('My Vehicles', 'Database backup', $path);
 
@@ -87,7 +87,7 @@ class SettingsController extends Controller
 
         return response($json, 200, [
             'Content-Type' => 'application/json',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
         ]);
     }
 
@@ -143,6 +143,7 @@ class SettingsController extends Controller
             DB::table('vehicle_refuels')->delete();
             DB::table('vehicles')->delete();
             DB::table('vehicle_service_types')->delete();
+            DB::table('users')->delete();
         });
 
         DB::statement('PRAGMA foreign_keys = ON');
