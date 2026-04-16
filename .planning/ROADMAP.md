@@ -5,6 +5,11 @@
 **Goal:** Implement the full 5-click settings reset easter egg — frontend trigger, confirmation modal, backend reset endpoint, and i18n strings.
 
 **Status:** not started
+**Plans:** 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Backend route, controller method, i18n strings, Wayfinder generation, and feature test
+- [ ] 01-02-PLAN.md — Frontend 5-click easter egg trigger, confirmation modal, and reset flow in Settings.vue
 
 ### Tasks
 
