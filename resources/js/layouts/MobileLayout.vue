@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { router, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useDisplay } from 'vuetify';
 import { useI18n } from 'vue-i18n';
+import { useDisplay } from 'vuetify';
 import { useAppTheme } from '@/composables/useAppTheme';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { i18n } from '@/i18n';
@@ -57,14 +57,26 @@ const activeNav = computed(() => {
 });
 
 const iconSize = computed(() => {
-    if (width.value < 340) return '16';
-    if (width.value < 380) return '18';
+    if (width.value < 340) {
+return '16';
+}
+
+    if (width.value < 380) {
+return '18';
+}
+
     return '20';
 });
 
 const navHeight = computed(() => {
-    if (width.value < 340) return 56;
-    if (width.value < 380) return 60;
+    if (width.value < 340) {
+return 56;
+}
+
+    if (width.value < 380) {
+return 60;
+}
+
     return 64;
 });
 
