@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Locale;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -74,12 +75,13 @@ class SettingsController extends Controller
             ],
         ];
 
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $json = Json::encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         $filename = 'my-vehicles-'.now()->format('Y-m-d').'.json';
 
         if (function_exists('nativephp_call')) {
             $path = storage_path('app/private/'.$filename);
-            file_put_contents($path, $json);
+            \File::ensureDirectoryExists(dirname($path));
+            \File::put($path, $json);
             Share::file('My Vehicles', 'Database backup', $path);
 
             return redirect()->back();
@@ -96,7 +98,7 @@ class SettingsController extends Controller
         $request->validate(['file' => ['required', 'file', 'max:10240']]);
 
         $content = file_get_contents($request->file('file')->getPathname());
-        $data = json_decode($content, true);
+        $data = Json::decode($content);
 
         if (json_last_error() !== JSON_ERROR_NONE || ! isset($data['version'], $data['data'])) {
             return redirect()->back()->withErrors(['file' => 'settings.import_error']);
