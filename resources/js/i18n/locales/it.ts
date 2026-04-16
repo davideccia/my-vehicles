@@ -103,10 +103,10 @@ export default {
         last_service: 'Ultima manutenzione',
         no_service_yet: 'Nessuna manutenzione registrata',
         overdue_alert: 'Hai uno o più promemoria scaduti.',
+        total_paid: 'Costo totale',
         current_vehicle_odometer: 'Chilometraggio attuale',
         last_vehicle_service_odometer: 'Ultimo chilometraggio',
         recommended_vehicle_service_odometer: 'Chilometraggio raccomandato',
-        overdue_odometer_diff: 'Da fare tra',
     },
     reports: {
         title: 'Report',

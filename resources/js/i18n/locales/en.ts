@@ -102,6 +102,10 @@ export default {
         last_service: 'Last service',
         no_service_yet: 'No service recorded yet',
         overdue_alert: 'You have one or more overdue reminders.',
+        total_paid: 'Total cost',
+        current_vehicle_odometer: 'Current odometer',
+        last_vehicle_service_odometer: 'Last odometer',
+        recommended_vehicle_service_odometer: 'Recommended odometer',
     },
     reports: {
         title: 'Reports',
