@@ -88,11 +88,11 @@ function onVehicleFilter(value: string | null): void {
                     <v-icon v-if="reminder.vehicle_service_type?.icon">{{ reminder.vehicle_service_type.icon }}</v-icon>
                     {{ reminder.vehicle_service_type?.label }}
                 </v-card-title>
+                <v-card-subtitle v-if="reminder.vehicle" class="text-wrap pb-3">
+                    <v-chip label :color="reminder.vehicle.color" size="small">{{ reminder.vehicle.brand }} {{ reminder.vehicle.model }} ({{ reminder.vehicle.plate_number }})</v-chip>
+                </v-card-subtitle>
                 <v-card-subtitle v-if="reminder.vehicle" class="text-wrap">
                     <div class="text-caption text-white pb-1">({{ t('reminders.every') + ' ' + reminder.every }} km)</div>
-                </v-card-subtitle>
-                <v-card-subtitle v-if="reminder.vehicle" class="text-white text-wrap">
-                    {{ reminder.vehicle.brand }} {{ reminder.vehicle.model }} ({{ reminder.vehicle.plate_number }})
                 </v-card-subtitle>
                 <v-card-text>
                     <div class="text-caption text-medium-emphasis mb-1"></div>

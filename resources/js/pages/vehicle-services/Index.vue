@@ -85,11 +85,11 @@ function onVehicleFilter(value: string | null): void {
                     <v-icon v-if="service.vehicle_service_type?.icon">{{ service.vehicle_service_type.icon }}</v-icon>
                     {{ service.vehicle_service_type?.label }}
                 </v-card-title>
+                <v-card-text>
+                    <v-chip label :color="service.vehicle.color" size="small">{{ service.vehicle.brand }} {{ service.vehicle.model }} ({{ service.vehicle.plate_number }})</v-chip>
+                </v-card-text>
                 <v-card-subtitle class="text-wrap">
                     {{ formatDate(service.date) }}
-                    <span v-if="service.vehicle">
-                        — {{ service.vehicle.brand }} {{ service.vehicle.model }} ({{ service.vehicle.plate_number }})
-                    </span>
                 </v-card-subtitle>
                 <v-card-text>
                     <v-row density="comfortable">

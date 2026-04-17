@@ -23,6 +23,7 @@ export default {
         brand: 'Brand',
         model: 'Model',
         year: 'Year',
+        color: 'Color',
         purchase_date: 'Purchase date',
         no_vehicles: 'No vehicles registered.',
         saved: 'Vehicle saved.',

@@ -26,6 +26,4 @@ Route::get('/settings', [SettingsController::class, 'show'])->name('settings.sho
 Route::post('/settings/locale', [SettingsController::class, 'updateLocale'])->name('settings.locale');
 Route::post('/settings/color', [SettingsController::class, 'updateColor'])->name('settings.color');
 Route::post('/settings/theme', [SettingsController::class, 'updateTheme'])->name('settings.theme');
-Route::get('/settings/export', [SettingsController::class, 'export'])->name('settings.export');
-Route::post('/settings/import', [SettingsController::class, 'import'])->name('settings.import');
 Route::post('/settings/reset', [SettingsController::class, 'resetDb'])->name('settings.reset');

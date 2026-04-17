@@ -19,6 +19,7 @@ const form = useForm({
     brand: props.vehicle?.brand ?? '',
     model: props.vehicle?.model ?? '',
     year: props.vehicle?.year ?? new Date().getFullYear(),
+    color: props.vehicle?.color ?? '',
     purchase_date: props.vehicle?.purchase_date ?? '',
 });
 
@@ -70,12 +71,25 @@ function submit(): void {
                 :min="1900"
                 :max="new Date().getFullYear() + 1"
                 variant="outlined"
-                class="mb-2"
+                class="mb-2"cols
             />
             <DatePickerField
                 v-model="form.purchase_date"
                 :label="t('vehicles.purchase_date')"
                 :error-messages="form.errors.purchase_date"
+            />
+            <v-color-picker
+                v-model="form.color"
+                :label="t('vehicles.color')"
+                :error-messages="form.errors.color"
+                class="mb-2"
+                variant="outlined"
+                rounded="xl"
+                :modes="['hex']"
+                mode="hex"
+                show-swatches
+                hide-inputs
+                width="100%"
             />
 
             <div class="d-flex ga-2">

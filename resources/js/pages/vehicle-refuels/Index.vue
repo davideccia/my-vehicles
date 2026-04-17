@@ -70,8 +70,10 @@ function onVehicleFilter(value: string | null): void {
         <v-card v-for="refuel in refuels" :key="refuel.id" class="mb-3 d-flex" rounded="lg">
             <div class="flex-grow-1" style="min-width: 0;">
                 <v-card-title class="text-wrap">{{ formatDate(refuel.date) }}</v-card-title>
+                <v-card-text class="pb-1">
+                    <v-chip label :color="refuel.vehicle.color" size="small">{{ refuel.vehicle.brand }} {{ refuel.vehicle.model }} ({{ refuel.vehicle.plate_number }})</v-chip>
+                </v-card-text>
                 <v-card-subtitle v-if="refuel.vehicle" class="text-wrap">
-                    {{ refuel.vehicle.brand }} {{ refuel.vehicle.model }} ({{ refuel.vehicle.plate_number }})
                 </v-card-subtitle>
                 <v-card-text>
                     <v-row density="comfortable">

@@ -43,12 +43,10 @@ class Report
 
                 $byDate = $vehicleRefuels->mapWithKeys(static fn ($model) => [$model->date->format($format) => $model->max_unit_price]);
 
-                $color = colority()->random()->toHex()->getValueColor();
-
                 return [
                     'label' => $vehicle->full_name,
-                    'backgroundColor' => $color,
-                    'borderColor' => $color,
+                    'backgroundColor' => $vehicle->color,
+                    'borderColor' => $vehicle->color,
                     'data' => array_map(static fn ($date) => $byDate->get($date) ?? 0, $dates),
                 ];
             })

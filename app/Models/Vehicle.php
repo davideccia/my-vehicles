@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(VehicleObserver::class)]
-#[Fillable(['plate_number', 'brand', 'model', 'year', 'purchase_date'])]
+#[Fillable(['plate_number', 'brand', 'model', 'year', 'color', 'purchase_date'])]
 #[ScopedBy(VehicleDefaultSortScope::class)]
 class Vehicle extends Model
 {

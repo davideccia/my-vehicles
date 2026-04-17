@@ -1,22 +1,28 @@
 <div align="center">
   <img src="public/icon.png" alt="My Vehicles" width="120" />
 
-  # My Vehicles
+# My Vehicles
 
-  A mobile-first vehicle management app for iOS and Android.
+A mobile-first vehicle management app for iOS and Android.
 
-  ![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?style=flat&logo=laravel&logoColor=white)
-  ![Vue](https://img.shields.io/badge/Vue-3-4FC08D?style=flat&logo=vue.js&logoColor=white)
-  ![Inertia](https://img.shields.io/badge/Inertia-3-9553E9?style=flat&logo=inertia&logoColor=white)
-  ![NativePHP](https://img.shields.io/badge/NativePHP-Mobile-blue?style=flat)
-  ![Vuetify](https://img.shields.io/badge/Vuetify-4-1867C0?style=flat&logo=vuetify&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?style=flat&logo=laravel&logoColor=white)
+![Vue](https://img.shields.io/badge/Vue-3-4FC08D?style=flat&logo=vue.js&logoColor=white)
+![Inertia](https://img.shields.io/badge/Inertia-3-9553E9?style=flat&logo=inertia&logoColor=white)
+![NativePHP](https://img.shields.io/badge/NativePHP-Mobile-blue?style=flat)
+![Vuetify](https://img.shields.io/badge/Vuetify-4-1867C0?style=flat&logo=vuetify&logoColor=white)
 </div>
 
 ---
 
+## Introduction
+
+> [!IMPORTANT]  
+> This app is for personal usage only. I will not accept any contributions or support.
+
 ## What It Does
 
-**My Vehicles** lets you keep track of your personal vehicles and their maintenance history from your phone. For each vehicle you can:
+**My Vehicles** let you keep track of your personal vehicles and their maintenance history from your phone. For each
+vehicle you can:
 
 - Store plate number, brand, model, year, and purchase date
 - Log **fuel refuels** (date, liters, cost, mileage)
@@ -28,18 +34,36 @@ The app supports **Italian** and **English** locales and is optimised for portra
 
 ---
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="public/screenshots-gallery/1.jpg" alt="Screenshot 1" /></td>
+    <td><img src="public/screenshots-gallery/3.jpg" alt="Screenshot 2" /></td>
+    <td><img src="public/screenshots-gallery/4.jpg" alt="Screenshot 3" /></td>
+    <td><img src="public/screenshots-gallery/6.jpg" alt="Screenshot 3" /></td>
+  </tr>
+  <tr>
+    <td style="align-content: center; text-align: center" colspan="3">...</td>
+  </tr>
+</table>
+
+See more in [folder](public/screenshots-gallery)
+
+---
+
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | [Laravel 13](https://laravel.com) |
-| Frontend | [Vue 3](https://vuejs.org) + [Inertia v3](https://inertiajs.com) |
-| Mobile runtime | [NativePHP Mobile](https://nativephp.com) (iOS & Android) |
-| UI components | [Vuetify 4](https://vuetifyjs.com) (Material Design 3) |
-| Icons | [Material Design Icons](https://pictogrammers.com/library/mdi/) |
-| CSS | [Tailwind CSS v4](https://tailwindcss.com) |
-| Database | SQLite (per-device) |
-| Testing | PHPUnit 12 |
+| Layer          | Technology                                                       |
+|----------------|------------------------------------------------------------------|
+| Backend        | [Laravel 13](https://laravel.com)                                |
+| Frontend       | [Vue 3](https://vuejs.org) + [Inertia v3](https://inertiajs.com) |
+| Mobile runtime | [NativePHP Mobile](https://nativephp.com) (iOS & Android)        |
+| UI components  | [Vuetify 4](https://vuetifyjs.com) (Material Design 3)           |
+| Icons          | [Material Design Icons](https://pictogrammers.com/library/mdi/)  |
+| CSS            | [Tailwind CSS v4](https://tailwindcss.com)                       |
+| Database       | SQLite (per-device)                                              |
+| Testing        | PHPUnit 12                                                       |
 
 ---
 

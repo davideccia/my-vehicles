@@ -4,6 +4,7 @@ export type Vehicle = {
     brand: string;
     model: string;
     year: number;
+    color: string;
     purchase_date: string | null;
     full_name: string;
     current_odometer: string;

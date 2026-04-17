@@ -30,6 +30,7 @@ class VehicleController extends Controller
             'brand' => ['required', 'string', 'max:100'],
             'model' => ['required', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.((int) date('Y') + 1)],
+            'color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'purchase_date' => ['nullable', 'date'],
         ]);
 
@@ -59,6 +60,7 @@ class VehicleController extends Controller
             'brand' => ['required', 'string', 'max:100'],
             'model' => ['required', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.((int) date('Y') + 1)],
+            'color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'purchase_date' => ['nullable', 'date'],
         ]);
 

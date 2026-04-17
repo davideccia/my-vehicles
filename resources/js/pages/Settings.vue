@@ -4,14 +4,7 @@ import { useDebounceFn } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { DEFAULT_PRIMARY, useAppTheme } from '@/composables/useAppTheme';
-import {
-    color as colorRoute,
-    exportMethod,
-    importMethod,
-    locale,
-    reset as resetDb,
-    theme as themeRoute
-} from '@/routes/settings';
+import { color as colorRoute, locale, reset as resetDb, theme as themeRoute } from '@/routes/settings';
 
 const props = defineProps<{
     locales: { value: string; label: string }[];
@@ -236,47 +229,6 @@ function confirmReset(): void {
             width="100%"
         />
 
-<!--        <v-divider class="my-6" />-->
-
-<!--        <h3 class="text-h5 mb-6">{{ t('settings.sections.data') }}</h3>-->
-
-<!--        <v-list lines="two" class="pa-0">-->
-<!--            <v-list-item-->
-<!--                :title="t('settings.export_db')"-->
-<!--                :subtitle="t('settings.export_db_desc')"-->
-<!--                prepend-icon="mdi-database-export-outline"-->
-<!--                rounded="xl"-->
-<!--                class="mb-2"-->
-<!--                @click="onExport"-->
-<!--            >-->
-<!--                <template #append>-->
-<!--                    <v-icon>mdi-chevron-right</v-icon>-->
-<!--                </template>-->
-<!--            </v-list-item>-->
-
-<!--            <v-list-item-->
-<!--                :title="t('settings.import_db')"-->
-<!--                :subtitle="t('settings.import_db_desc')"-->
-<!--                prepend-icon="mdi-database-import-outline"-->
-<!--                rounded="xl"-->
-<!--                :disabled="importLoading"-->
-<!--                @click="onImportClick"-->
-<!--            >-->
-<!--                <template #append>-->
-<!--                    <v-progress-circular v-if="importLoading" indeterminate size="20" width="2" />-->
-<!--                    <v-icon v-else>mdi-chevron-right</v-icon>-->
-<!--                </template>-->
-<!--            </v-list-item>-->
-<!--        </v-list>-->
-
-<!--        &lt;!&ndash; Hidden file input &ndash;&gt;-->
-<!--        <input-->
-<!--            ref="fileInput"-->
-<!--            type="file"-->
-<!--            accept=".json"-->
-<!--            class="d-none"-->
-<!--            @change="onFileSelected"-->
-<!--        />-->
     </v-container>
 
     <!-- Confirm dialog -->

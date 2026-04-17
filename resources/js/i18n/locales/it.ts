@@ -23,6 +23,7 @@ export default {
         brand: 'Marca',
         model: 'Modello',
         year: 'Anno',
+        color: 'Colore',
         purchase_date: 'Data acquisto',
         current_odometer: 'Chilometraggio attuale',
         no_vehicles: 'Nessun veicolo registrato.',
