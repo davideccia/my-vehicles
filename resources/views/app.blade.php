@@ -41,5 +41,43 @@
     </head>
     <body class="font-sans antialiased">
         <x-inertia::app />
+
+        <native:bottom-nav label-visibility="labeled">
+            <native:bottom-nav-item
+                id="vehicles"
+                icon="car.side.fill"
+                :label="__('app.nav.vehicles')"
+                url="/vehicles"
+                :active="request()->is('vehicles*')"
+            />
+            <native:bottom-nav-item
+                id="refuels"
+                icon="fuelpump.fill"
+                :label="__('app.nav.refuels')"
+                url="/vehicle-refuels"
+                :active="request()->is('vehicle-refuels*')"
+            />
+            <native:bottom-nav-item
+                id="services"
+                icon="wrench.fill"
+                :label="__('app.nav.services')"
+                url="/vehicle-services"
+                :active="request()->is('vehicle-services*')"
+            />
+            <native:bottom-nav-item
+                id="reports"
+                icon="chart.bar.fill"
+                :label="__('app.nav.reports')"
+                url="/reports"
+                :active="request()->is('reports*')"
+            />
+            <native:bottom-nav-item
+                id="settings"
+                icon="gearshape.fill"
+                :label="__('app.nav.settings')"
+                url="/settings"
+                :active="request()->is('settings*')"
+            />
+        </native:bottom-nav>
     </body>
 </html>
