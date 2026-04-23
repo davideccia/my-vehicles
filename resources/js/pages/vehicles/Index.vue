@@ -52,12 +52,15 @@ function doDelete(): void {
         <v-card v-for="vehicle in vehicles" :key="vehicle.id" class="mb-3 d-flex" rounded="lg">
             <div class="d-flex flex-column align-center justify-center pa-2 border-s" :style="{ backgroundColor: vehicle.color }"/>
             <div class="d-flex flex-column flex-grow-1" style="min-width: 0;">
-                <v-card-text class="pb-1">
+                <v-card-title class="pb-1">
                     <v-chip label :color="vehicle.color" size="small">{{ vehicle.plate_number }}</v-chip>
-                </v-card-text>
+                </v-card-title>
                 <v-card-title class="text-wrap">{{ vehicle.brand }} {{ vehicle.model }}</v-card-title>
-                <v-card-subtitle class="text-wrap pb-3">{{ vehicle.year }}</v-card-subtitle>
-                <v-card-subtitle class="text-wrap pb-3">{{ vehicle.current_odometer }} km</v-card-subtitle>
+                <v-card-text>
+                    <v-icon icon="mdi-fuel"/> {{ t(`vehicles.fuel_types.${vehicle.fuel_type}`) }}
+                </v-card-text>
+                <v-card-subtitle class="text-wrap">{{ vehicle.year }}</v-card-subtitle>
+                <v-card-subtitle class="text-wrap">{{ vehicle.current_odometer }} km</v-card-subtitle>
                 <v-card-text v-if="vehicle.purchase_date">
                     {{ t('vehicles.purchase_date') }}: {{ formatDate(vehicle.purchase_date) }}
                 </v-card-text>

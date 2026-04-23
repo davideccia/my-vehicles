@@ -73,21 +73,20 @@ function onVehicleFilter(value: string | null): void {
                 <v-card-text class="pb-1">
                     <v-chip label :color="refuel.vehicle.color" size="small">{{ refuel.vehicle.brand }} {{ refuel.vehicle.model }} ({{ refuel.vehicle.plate_number }})</v-chip>
                 </v-card-text>
-                <v-card-subtitle v-if="refuel.vehicle" class="text-wrap">
-                </v-card-subtitle>
                 <v-card-text>
                     <v-row density="comfortable">
                         <v-col cols="4">
+                            <div class="text-caption text-medium-emphasis">{{ t('refuels.total_price') }}</div>
+                            <div class="font-weight-medium">€ {{ refuel.total_price }}</div>
+                        </v-col>
+                        <v-divider vertical/>
+                        <v-col cols="3">
                             <div class="text-caption text-medium-emphasis">{{ t('refuels.liters') }}</div>
                             <div class="font-weight-medium">{{ refuel.liters }} L</div>
                         </v-col>
                         <v-col cols="4">
                             <div class="text-caption text-medium-emphasis">{{ t('refuels.unit_price') }}</div>
                             <div class="font-weight-medium">€ {{ refuel.unit_price }}</div>
-                        </v-col>
-                        <v-col cols="4">
-                            <div class="text-caption text-medium-emphasis">{{ t('refuels.total_price') }}</div>
-                            <div class="font-weight-medium">€ {{ refuel.total_price }}</div>
                         </v-col>
                     </v-row>
                 </v-card-text>
