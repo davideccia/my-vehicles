@@ -112,11 +112,15 @@ function onVehicleFilter(value: string | null): void {
                     </div>
                 </v-card-text>
             </div>
-            <v-card-actions>
-                <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service: service.id }))" />
-                <v-spacer />
-                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(service)" />
-            </v-card-actions>
+            <div class="d-flex pa-2 gap-2">
+                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service: service.id }))">
+                    {{ t('common.edit') }}
+                </v-btn>
+                &nbsp;
+                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(service)">
+                    {{ t('common.delete') }}
+                </v-btn>
+            </div>
         </v-card>
     </v-container>
 </template>

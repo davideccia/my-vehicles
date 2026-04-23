@@ -61,11 +61,15 @@ function doDelete(): void {
                 <v-card-text v-if="vehicle.purchase_date">
                     {{ t('vehicles.purchase_date') }}: {{ formatDate(vehicle.purchase_date) }}
                 </v-card-text>
-                <v-card-actions>
-                    <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url(vehicle))" />
-                    <v-spacer />
-                    <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(vehicle)" />
-                </v-card-actions>
+                <div class="d-flex pa-2 gap-2">
+                    <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url(vehicle))">
+                        {{ t('common.edit') }}
+                    </v-btn>
+                    &nbsp;
+                    <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(vehicle)">
+                        {{ t('common.delete') }}
+                    </v-btn>
+                </div>
             </div>
         </v-card>
     </v-container>

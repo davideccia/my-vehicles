@@ -5,6 +5,7 @@ export default {
         search: 'Cerca',
         save: 'Salva',
         cancel: 'Annulla',
+        edit: 'Modifica',
         delete: 'Elimina',
     },
     nav: {

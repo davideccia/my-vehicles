@@ -5,6 +5,7 @@ export default {
         search: 'Search',
         save: 'Save',
         cancel: 'Cancel',
+        edit: 'Edit',
         delete: 'Delete',
     },
     nav: {

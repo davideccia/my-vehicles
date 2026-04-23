@@ -129,11 +129,15 @@ function onVehicleFilter(value: string | null): void {
                     <div v-else class="text-caption font-italic text-medium-emphasis">{{ t('reminders.no_service_yet') }}</div>
                 </v-card-text>
             </div>
-            <v-card-actions>
-                <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))" />
-                <v-spacer />
-                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(reminder)" />
-            </v-card-actions>
+            <div class="d-flex pa-2 gap-2">
+                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))">
+                    {{ t('common.edit') }}
+                </v-btn>
+                &nbsp;
+                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(reminder)">
+                    {{ t('common.delete') }}
+                </v-btn>
+            </div>
         </v-card>
     </v-container>
 </template>
