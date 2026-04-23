@@ -149,7 +149,7 @@ Domain-specific skills available. Activate relevant skill when working in that d
 
 ## Conventions
 
-- Follow all existing code conventions. When creating or editing file, check sibling files for correct structure, approach, and naming.
+- Follow all existing code conventions. When creating or editing a file, check sibling files for correct structure, approach, and naming.
 - Use descriptive names for variables and methods. e.g. `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing new ones.
 
@@ -164,7 +164,7 @@ Don't create verification scripts or tinker when tests cover that functionality.
 
 ## Frontend Bundling
 
-If user doesn't see frontend change in UI, they may need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
+If user doesn't see a frontend change in UI, they may need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
 
 ## Documentation Files
 
@@ -180,10 +180,10 @@ Be concise — focus on what's important, not obvious details.
 
 ## Tools
 
-Laravel Boost is MCP server with tools designed for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
+Laravel Boost is an MCP server with tools designed for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
 - Use `database-query` for read-only DB queries instead of raw SQL in tinker.
 - Use `database-schema` to inspect table structure before writing migrations or models.
-- Use `get-absolute-url` to resolve correct scheme, domain, and port for project URLs. Always use before sharing URL with user.
+- Use `get-absolute-url` to resolve correct scheme, domain, and port for project URLs. Always use before sharing a URL with user.
 - Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs useful, ignore old entries.
 
 ## Searching Documentation (IMPORTANT)
@@ -234,7 +234,7 @@ Laravel Boost is MCP server with tools designed for this application. Prefer Boo
 
 # Test Enforcement
 
-- Every change must be programmatically tested. Write or update test, then run affected tests to verify pass.
+- Every change must be programmatically tested. Write or update a test, then run affected tests to verify they pass.
 - Run minimum tests needed for quality and speed. Use `php artisan test --compact` with specific filename or filter.
 
 === inertia-laravel/core rules ===
@@ -308,11 +308,11 @@ Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `
 # PHPUnit
 
 - App uses PHPUnit for testing. All tests must be PHPUnit classes. Use `php artisan make:test --phpunit {name}` to create new tests.
-- If you see Pest test, convert it to PHPUnit.
-- After updating test, run that singular test.
+- If you see a Pest test, convert it to PHPUnit.
+- After updating a test, run that singular test.
 - When feature tests pass, ask user if they want to run entire test suite.
 - Tests must cover all happy paths, failure paths, and edge cases.
-- Don't remove any tests or test files without approval. Core to application.
+- Don't remove any tests or test files without approval. These are core to the application.
 
 ## Running Tests
 
