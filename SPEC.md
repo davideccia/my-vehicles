@@ -2,21 +2,18 @@
 
 ## §G — Goal
 
-Replace Vuetify `v-bottom-navigation` in `MobileLayout.vue` with NativePHP EDGE `native:bottom-nav` in `app.blade.php`. 5 nav items. Active state via PHP `request()->is()`. Labels via Laravel `__()`.
+Move edit/delete buttons from right-side column to card bottom in all 5 `Index.vue` files. More horizontal space for content. Delete button stays red (`color="error"`). Confirm alert logic unchanged.
 
 ---
 
 ## §C — Constraints
 
-- `native:bottom-nav` goes in `app.blade.php` (Blade, not Vue)
-- Items: Vehicles `/vehicles`, Refuels `/vehicle-refuels`, Services `/vehicle-services`, Reports `/reports`, Settings `/settings`
-- Active state per item: `:active="request()->is('vehicles*')"` pattern
-- Labels from Laravel lang files (`lang/en/app.php`, `lang/it/app.php`) via `__('app.nav.*')`
-- `HandleLocale` middleware already sets `App::setLocale()` — `__()` respects locale
-- Icons: use NativePHP system icon names (platform-specific fallback allowed)
-- `v-bottom-navigation`, keyboard detection, `iconSize`/`navHeight` computed, `useDisplay` import all removed from `MobileLayout.vue`
-- `v-main` padding-bottom adjusted: remove hardcoded `88px` nav offset (native nav owns its space)
-- `label-visibility="labeled"` on container
+- Files: `vehicles`, `vehicle-refuels`, `vehicle-services`, `vehicle-service-types`, `vehicle-service-reminders` Index.vue
+- Remove right-side `div.border-s` column containing buttons
+- Add bottom action row (e.g. `v-card-actions` or plain div) with edit + delete buttons side by side
+- Edit btn: `variant="outlined"` icon `mdi-pencil`
+- Delete btn: `variant="elevated" color="error"` icon `mdi-delete` — must stay red
+- `ConfirmDialog`, `promptDelete`, `doDelete` logic untouched
 
 ---
 
@@ -24,10 +21,11 @@ Replace Vuetify `v-bottom-navigation` in `MobileLayout.vue` with NativePHP EDGE 
 
 | id | surface | path |
 |----|---------|------|
-| I.blade | Blade layout | `resources/views/app.blade.php` |
-| I.layout | Vue layout | `resources/js/layouts/MobileLayout.vue` |
-| I.lang-en | English translations | `lang/en/app.php` |
-| I.lang-it | Italian translations | `lang/it/app.php` |
+| I.vehicles | vehicles Index | `resources/js/pages/vehicles/Index.vue` |
+| I.refuels | vehicle-refuels Index | `resources/js/pages/vehicle-refuels/Index.vue` |
+| I.services | vehicle-services Index | `resources/js/pages/vehicle-services/Index.vue` |
+| I.types | vehicle-service-types Index | `resources/js/pages/vehicle-service-types/Index.vue` |
+| I.reminders | vehicle-service-reminders Index | `resources/js/pages/vehicle-service-reminders/Index.vue` |
 
 ---
 
@@ -35,15 +33,11 @@ Replace Vuetify `v-bottom-navigation` in `MobileLayout.vue` with NativePHP EDGE 
 
 | id | invariant |
 |----|-----------|
-| V1 | `native:bottom-nav` in `app.blade.php` with exactly 5 items |
-| V2 | Each item has unique `id`, correct `url` (route path), `icon`, `label` via `__()`, `:active` via `request()->is()` |
-| V3 | `v-bottom-navigation` block removed from `MobileLayout.vue` |
-| V4 | Keyboard detection (`isKeyboardOpen`, `handleFocusIn`, `handleFocusOut`, `onMounted`/`onUnmounted` listeners) removed from `MobileLayout.vue` |
-| V5 | `iconSize`, `navHeight` computed props removed from `MobileLayout.vue` |
-| V6 | `useDisplay` import removed from `MobileLayout.vue` |
-| V7 | `v-main` padding-bottom no longer reserves `88px` for Vuetify nav |
-| V8 | `lang/en/app.php` and `lang/it/app.php` contain `nav.vehicles`, `nav.refuels`, `nav.services`, `nav.reports`, `nav.settings` keys |
-| V9 | `<style scoped>` block with `.nav-btn` and `.nav-label` removed from `MobileLayout.vue` |
+| V10 | All 5 Index.vue: edit/delete buttons in card bottom, not right column |
+| V11 | Delete button keeps `color="error"` in all files |
+| V12 | `ConfirmDialog`, `promptDelete`, `doDelete` logic unchanged in all files |
+| V13 | Right-side `border-s` column div removed from all cards |
+| V14 | Card content uses full horizontal width after button move |
 
 ---
 
@@ -51,9 +45,11 @@ Replace Vuetify `v-bottom-navigation` in `MobileLayout.vue` with NativePHP EDGE 
 
 | id | status | goal | cites |
 |----|--------|------|-------|
-| T1 | x | Add nav translation keys to `lang/en/app.php` and `lang/it/app.php` | V8,I.lang-en,I.lang-it |
-| T2 | . | Add `native:bottom-nav` to `app.blade.php` | V1,V2,I.blade |
-| T3 | . | Remove `v-bottom-navigation` and cleanup from `MobileLayout.vue` | V3,V4,V5,V6,V7,V9,I.layout |
+| T10 | x | Move buttons to card bottom in `vehicles/Index.vue` | V10,V11,V12,V13,V14,I.vehicles |
+| T11 | x | Move buttons to card bottom in `vehicle-refuels/Index.vue` | V10,V11,V12,V13,V14,I.refuels |
+| T12 | x | Move buttons to card bottom in `vehicle-services/Index.vue` | V10,V11,V12,V13,V14,I.services |
+| T13 | x | Move buttons to card bottom in `vehicle-service-types/Index.vue` | V10,V11,V12,V13,V14,I.types |
+| T14 | x | Move buttons to card bottom in `vehicle-service-reminders/Index.vue` | V10,V11,V12,V13,V14,I.reminders |
 
 ---
 
