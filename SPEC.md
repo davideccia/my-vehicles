@@ -53,7 +53,7 @@ Replace Vuetify `v-bottom-navigation` in `MobileLayout.vue` with NativePHP EDGE 
 |----|--------|------|-------|
 | T1 | x | Add nav translation keys to `lang/en/app.php` and `lang/it/app.php` | V8,I.lang-en,I.lang-it |
 | T2 | x | Add `native:bottom-nav` to `app.blade.php` | V1,V2,I.blade |
-| T3 | x | Remove `v-bottom-navigation` and cleanup from `MobileLayout.vue` | V3,V4,V5,V6,V7,V9,I.layout |
+| T3 | . | Remove `v-bottom-navigation` and cleanup from `MobileLayout.vue` | V3,V4,V5,V6,V7,V9,I.layout |
 
 ---
 
