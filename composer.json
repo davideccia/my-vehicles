@@ -51,6 +51,11 @@
             "@php artisan test",
             "bash build-android.sh"
         ],
+        "build:android:testing": [
+            "npm run build -- --mode=android",
+            "@php artisan test",
+            "@php artisan native:run"
+        ],
         "native:debug": [
             "npm install",
             "npm run build",
