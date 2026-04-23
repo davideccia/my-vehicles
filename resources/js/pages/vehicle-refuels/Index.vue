@@ -67,8 +67,8 @@ function onVehicleFilter(value: string | null): void {
             {{ t('refuels.no_refuels') }}
         </v-alert>
 
-        <v-card v-for="refuel in refuels" :key="refuel.id" class="mb-3 d-flex" rounded="lg">
-            <div class="flex-grow-1" style="min-width: 0;">
+        <v-card v-for="refuel in refuels" :key="refuel.id" class="mb-3" rounded="lg">
+            <div style="min-width: 0;">
                 <v-card-title class="text-wrap">{{ formatDate(refuel.date) }}</v-card-title>
                 <v-card-text class="pb-1">
                     <v-chip label :color="refuel.vehicle.color" size="small">{{ refuel.vehicle.brand }} {{ refuel.vehicle.model }} ({{ refuel.vehicle.plate_number }})</v-chip>
@@ -92,14 +92,11 @@ function onVehicleFilter(value: string | null): void {
                     </v-row>
                 </v-card-text>
             </div>
-            <div class="d-flex flex-column align-center justify-center pa-2 border-s">
-                <div class="pb-2">
-                    <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_refuel: refuel.id }))" />
-                </div>
-                <div class="pt-2">
-                    <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(refuel)" />
-                </div>
-            </div>
+            <v-card-actions>
+                <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_refuel: refuel.id }))" />
+                <v-spacer />
+                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(refuel)" />
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>

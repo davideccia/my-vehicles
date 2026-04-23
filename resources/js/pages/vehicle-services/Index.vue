@@ -79,8 +79,8 @@ function onVehicleFilter(value: string | null): void {
             {{ t('services.no_services') }}
         </v-alert>
 
-        <v-card v-for="service in services" :key="service.id" class="mb-3 d-flex" rounded="lg">
-            <div class="flex-grow-1" style="min-width: 0;">
+        <v-card v-for="service in services" :key="service.id" class="mb-3" rounded="lg">
+            <div style="min-width: 0;">
                 <v-card-title class="d-flex align-center ga-2 text-wrap">
                     <v-icon v-if="service.vehicle_service_type?.icon">{{ service.vehicle_service_type.icon }}</v-icon>
                     {{ service.vehicle_service_type?.label }}
@@ -112,14 +112,11 @@ function onVehicleFilter(value: string | null): void {
                     </div>
                 </v-card-text>
             </div>
-            <div class="d-flex flex-column align-center justify-center pa-2 border-s">
-                <div class="pb-2">
-                    <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service: service.id }))" />
-                </div>
-                <div class="pt-2">
-                    <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(service)" />
-                </div>
-            </div>
+            <v-card-actions>
+                <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service: service.id }))" />
+                <v-spacer />
+                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(service)" />
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>

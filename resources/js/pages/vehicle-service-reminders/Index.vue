@@ -82,8 +82,8 @@ function onVehicleFilter(value: string | null): void {
 
         <v-divider class="pb-4"/>
 
-        <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3 d-flex" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
-            <div class="flex-grow-1" style="min-width: 0;">
+        <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
+            <div style="min-width: 0;">
                 <v-card-title class="d-flex align-center ga-2 text-wrap">
                     <v-icon v-if="reminder.vehicle_service_type?.icon">{{ reminder.vehicle_service_type.icon }}</v-icon>
                     {{ reminder.vehicle_service_type?.label }}
@@ -129,14 +129,11 @@ function onVehicleFilter(value: string | null): void {
                     <div v-else class="text-caption font-italic text-medium-emphasis">{{ t('reminders.no_service_yet') }}</div>
                 </v-card-text>
             </div>
-            <div class="d-flex flex-column align-center justify-center pa-2 border-s">
-                <div class="pb-2">
-                    <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))" />
-                </div>
-                <div class="pt-2">
-                    <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(reminder)" />
-                </div>
-            </div>
+            <v-card-actions>
+                <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))" />
+                <v-spacer />
+                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(reminder)" />
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>

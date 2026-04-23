@@ -51,7 +51,7 @@ function doDelete(): void {
 
         <v-card v-for="vehicle in vehicles" :key="vehicle.id" class="mb-3 d-flex" rounded="lg">
             <div class="d-flex flex-column align-center justify-center pa-2 border-s" :style="{ backgroundColor: vehicle.color }"/>
-            <div class="flex-grow-1" style="min-width: 0;">
+            <div class="d-flex flex-column flex-grow-1" style="min-width: 0;">
                 <v-card-text class="pb-1">
                     <v-chip label :color="vehicle.color" size="small">{{ vehicle.plate_number }}</v-chip>
                 </v-card-text>
@@ -61,14 +61,11 @@ function doDelete(): void {
                 <v-card-text v-if="vehicle.purchase_date">
                     {{ t('vehicles.purchase_date') }}: {{ formatDate(vehicle.purchase_date) }}
                 </v-card-text>
-            </div>
-            <div class="d-flex flex-column align-center justify-center pa-2 border-s">
-                <div class="pb-2">
+                <v-card-actions>
                     <v-btn icon="mdi-pencil" size="small" variant="outlined" @click="router.visit(edit.url(vehicle))" />
-                </div>
-                <div class="pt-2">
-                <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(vehicle)" />
-                </div>
+                    <v-spacer />
+                    <v-btn icon="mdi-delete" size="small" variant="elevated" color="error" @click="promptDelete(vehicle)" />
+                </v-card-actions>
             </div>
         </v-card>
     </v-container>
