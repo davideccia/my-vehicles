@@ -45,35 +45,35 @@
         <native:bottom-nav label-visibility="labeled">
             <native:bottom-nav-item
                 id="vehicles"
-                icon="car.side.fill"
+                icon="directions_car"
                 :label="__('app.nav.vehicles')"
                 url="/vehicles"
                 :active="request()->is('vehicles*')"
             />
             <native:bottom-nav-item
                 id="refuels"
-                icon="fuelpump.fill"
+                icon="local_gas_station"
                 :label="__('app.nav.refuels')"
                 url="/vehicle-refuels"
                 :active="request()->is('vehicle-refuels*')"
             />
             <native:bottom-nav-item
                 id="services"
-                icon="wrench.fill"
+                icon="build"
                 :label="__('app.nav.services')"
                 url="/vehicle-services"
                 :active="request()->is('vehicle-services*')"
             />
             <native:bottom-nav-item
                 id="reports"
-                icon="chart.bar.fill"
+                icon="bar_chart"
                 :label="__('app.nav.reports')"
                 url="/reports"
                 :active="request()->is('reports*')"
             />
             <native:bottom-nav-item
                 id="settings"
-                icon="gearshape.fill"
+                icon="settings"
                 :label="__('app.nav.settings')"
                 url="/settings"
                 :active="request()->is('settings*')"
