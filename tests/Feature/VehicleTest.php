@@ -43,6 +43,7 @@ class VehicleTest extends TestCase
             'year' => 2020,
             'purchase_date' => null,
             'color' => '#FF0000',
+            'fuel_type' => 'gasoline',
         ]);
 
         $response->assertRedirect('/vehicles');
@@ -53,7 +54,7 @@ class VehicleTest extends TestCase
     {
         $response = $this->post('/vehicles', []);
 
-        $response->assertSessionHasErrors(['plate_number', 'brand', 'model', 'year']);
+        $response->assertSessionHasErrors(['plate_number', 'brand', 'model', 'year', 'fuel_type']);
     }
 
     public function test_store_validates_unique_plate_number(): void
@@ -66,6 +67,7 @@ class VehicleTest extends TestCase
             'model' => 'Serie 3',
             'year' => 2021,
             'color' => '#FF0000',
+            'fuel_type' => 'diesel',
         ]);
 
         $response->assertSessionHasErrors('plate_number');
@@ -82,10 +84,41 @@ class VehicleTest extends TestCase
             'year' => 2022,
             'purchase_date' => null,
             'color' => '#FF0000',
+            'fuel_type' => 'diesel',
         ]);
 
         $response->assertRedirect('/vehicles');
         $this->assertDatabaseHas('vehicles', ['id' => $vehicle->id, 'plate_number' => 'ZZ999ZZ']);
+    }
+
+    public function test_store_rejects_invalid_fuel_type(): void
+    {
+        $response = $this->post('/vehicles', [
+            'plate_number' => 'AB123CD',
+            'brand' => 'Fiat',
+            'model' => 'Panda',
+            'year' => 2020,
+            'color' => '#FF0000',
+            'fuel_type' => 'electric',
+        ]);
+
+        $response->assertSessionHasErrors('fuel_type');
+    }
+
+    public function test_update_rejects_invalid_fuel_type(): void
+    {
+        $vehicle = Vehicle::factory()->create();
+
+        $response = $this->put("/vehicles/{$vehicle->id}", [
+            'plate_number' => $vehicle->plate_number,
+            'brand' => $vehicle->brand,
+            'model' => $vehicle->model,
+            'year' => $vehicle->year,
+            'color' => '#FF0000',
+            'fuel_type' => 'hybrid',
+        ]);
+
+        $response->assertSessionHasErrors('fuel_type');
     }
 
     public function test_can_delete_a_vehicle(): void

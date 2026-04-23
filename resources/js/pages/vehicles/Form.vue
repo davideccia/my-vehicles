@@ -14,12 +14,18 @@ const { t } = useI18n();
 
 const isEditing = computed(() => !!props.vehicle);
 
+const fuelTypeItems = computed(() => [
+    { title: t('vehicles.fuel_types.gasoline'), value: 'gasoline' },
+    { title: t('vehicles.fuel_types.diesel'), value: 'diesel' },
+]);
+
 const form = useForm({
     plate_number: props.vehicle?.plate_number ?? '',
     brand: props.vehicle?.brand ?? '',
     model: props.vehicle?.model ?? '',
     year: props.vehicle?.year ?? new Date().getFullYear(),
     color: props.vehicle?.color ?? '',
+    fuel_type: props.vehicle?.fuel_type ?? 'diesel',
     purchase_date: props.vehicle?.purchase_date ?? '',
 });
 
@@ -72,6 +78,14 @@ function submit(): void {
                 :max="new Date().getFullYear() + 1"
                 variant="outlined"
                 class="mb-2"cols
+            />
+            <v-select
+                v-model="form.fuel_type"
+                :label="t('vehicles.fuel_type')"
+                :items="fuelTypeItems"
+                :error-messages="form.errors.fuel_type"
+                variant="outlined"
+                class="mb-2"
             />
             <DatePickerField
                 v-model="form.purchase_date"

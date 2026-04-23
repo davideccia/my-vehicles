@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleFuelTypeEnum;
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,6 +33,7 @@ class VehicleController extends Controller
             'model' => ['required', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.((int) date('Y') + 1)],
             'color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'fuel_type' => ['required', Rule::enum(VehicleFuelTypeEnum::class)],
             'purchase_date' => ['nullable', 'date'],
         ]);
 
@@ -61,6 +64,7 @@ class VehicleController extends Controller
             'model' => ['required', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.((int) date('Y') + 1)],
             'color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'fuel_type' => ['required', Rule::enum(VehicleFuelTypeEnum::class)],
             'purchase_date' => ['nullable', 'date'],
         ]);
 

@@ -5,6 +5,7 @@ export type Vehicle = {
     model: string;
     year: number;
     color: string;
+    fuel_type: 'gasoline' | 'diesel';
     purchase_date: string | null;
     full_name: string;
     current_odometer: string;

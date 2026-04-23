@@ -20,6 +20,7 @@ class VehicleResource extends JsonResource
             'model' => $this->resource->model,
             'year' => $this->resource->year,
             'color' => $this->resource->color,
+            'fuel_type' => $this->resource->fuel_type->value,
             'purchase_date' => $this->resource->purchase_date?->format('Y-m-d'),
             'current_odometer' => $this->resource->currentOdometer(),
             'full_name' => $this->resource->full_name,

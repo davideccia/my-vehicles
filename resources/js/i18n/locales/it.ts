@@ -24,6 +24,11 @@ export default {
         model: 'Modello',
         year: 'Anno',
         color: 'Colore',
+        fuel_type: 'Tipo carburante',
+        fuel_types: {
+            gasoline: 'Benzina',
+            diesel: 'Diesel',
+        },
         purchase_date: 'Data acquisto',
         current_odometer: 'Chilometraggio attuale',
         no_vehicles: 'Nessun veicolo registrato.',

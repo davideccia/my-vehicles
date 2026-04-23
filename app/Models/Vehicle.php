@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleFuelTypeEnum;
 use App\Models\Scopes\VehicleDefaultSortScope;
 use App\Observers\VehicleObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(VehicleObserver::class)]
-#[Fillable(['plate_number', 'brand', 'model', 'year', 'color', 'purchase_date'])]
+#[Fillable(['plate_number', 'brand', 'model', 'year', 'color', 'fuel_type', 'purchase_date'])]
 #[ScopedBy(VehicleDefaultSortScope::class)]
 class Vehicle extends Model
 {
@@ -25,6 +26,7 @@ class Vehicle extends Model
     {
         return [
             'purchase_date' => 'date',
+            'fuel_type' => VehicleFuelTypeEnum::class,
         ];
     }
 

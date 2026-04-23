@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             'year' => 2019,
             'purchase_date' => '2019-06-01',
             'color' => colority()->random()->toHex()->getValueColor(),
+            'fuel_type' => 'diesel',
         ]);
 
         $fiatPunto->vehicleServiceReminders()->create([
@@ -70,6 +71,7 @@ class DatabaseSeeder extends Seeder
             'year' => 2021,
             'purchase_date' => '2021-03-15',
             'color' => colority()->random()->toHex()->getValueColor(),
+            'fuel_type' => 'diesel',
         ]);
 
         $alfaGiulia->vehicleServiceReminders()->create([

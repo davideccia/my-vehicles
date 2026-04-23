@@ -24,6 +24,11 @@ export default {
         model: 'Model',
         year: 'Year',
         color: 'Color',
+        fuel_type: 'Fuel type',
+        fuel_types: {
+            gasoline: 'Gasoline',
+            diesel: 'Diesel',
+        },
         purchase_date: 'Purchase date',
         no_vehicles: 'No vehicles registered.',
         saved: 'Vehicle saved.',

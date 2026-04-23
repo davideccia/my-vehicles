@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\VehicleFuelTypeEnum;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,6 +20,7 @@ class VehicleFactory extends Factory
             'year' => fake()->numberBetween(2000, 2025),
             'purchase_date' => fake()->optional()->dateTimeBetween('-25 years')?->format('Y-m-d'),
             'color' => fake()->hexColor(),
+            'fuel_type' => fake()->randomElement(VehicleFuelTypeEnum::cases())->value,
         ];
     }
 }
