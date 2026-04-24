@@ -96,17 +96,16 @@ function onVehicleFilter(value: string | null): void {
                 </v-card-subtitle>
                 <v-card-text>
                     <div class="text-caption text-medium-emphasis mb-1"></div>
-                    <template v-if="reminder.latest_vehicle_service">
                         <v-row density="comfortable">
-                            <v-col cols="6">
+                            <v-col v-if="reminder.latest_vehicle_service" cols="6">
                                 <div class="text-caption text-medium-emphasis">{{ t('reminders.last_service') }}</div>
                                 <div class="font-weight-medium">{{ formatDate(reminder.latest_vehicle_service.date) }}</div>
                             </v-col>
-                            <v-col cols="6">
+                            <v-col v-if="reminder.latest_vehicle_service" cols="6">
                                 <div class="text-caption text-medium-emphasis">{{ t('reminders.total_paid') }}</div>
                                 <div class="font-weight-medium">€ {{ reminder.latest_vehicle_service.total_paid }}</div>
                             </v-col>
-                            <v-divider/>
+                            <v-divider v-if="reminder.latest_vehicle_service"/>
                             <v-col cols="6">
                                 <div class="text-caption text-medium-emphasis">{{ t('reminders.current_vehicle_odometer') }}</div>
                                 <div class="font-weight-medium">{{ reminder.current_vehicle_odometer }} km</div>
@@ -125,8 +124,6 @@ function onVehicleFilter(value: string | null): void {
                                 </v-chip>
                             </v-col>
                         </v-row>
-                    </template>
-                    <div v-else class="text-caption font-italic text-medium-emphasis">{{ t('reminders.no_service_yet') }}</div>
                 </v-card-text>
             </div>
             <div class="d-flex pa-2 gap-2">
