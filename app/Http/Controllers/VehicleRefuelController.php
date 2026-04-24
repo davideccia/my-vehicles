@@ -23,7 +23,7 @@ class VehicleRefuelController extends Controller
         }
 
         return Inertia::render('vehicle-refuels/Index', [
-            'refuels' => VehicleRefuelResource::collection($query->get())->resolve(),
+            'refuels' => VehicleRefuelResource::collection($query->paginate(5)),
             'vehicles' => VehicleResource::collection($vehicles)->resolve(),
             'selectedVehicleId' => $request->input('vehicle_id'),
         ]);

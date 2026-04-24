@@ -24,9 +24,27 @@ class VehicleServiceReminderTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-reminders/Index')
-            ->has('reminders', 3)
+            ->has('reminders.data', 3)
+            ->where('reminders.meta.total', 3)
+            ->where('reminders.meta.per_page', 5)
             ->has('vehicles')
             ->where('selectedVehicleId', null)
+        );
+    }
+
+    public function test_index_paginates_reminders(): void
+    {
+        $this->withoutVite();
+        VehicleServiceReminder::factory()->count(7)->create();
+
+        $response = $this->get('/vehicle-service-reminders');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-service-reminders/Index')
+            ->has('reminders.data', 5)
+            ->where('reminders.meta.total', 7)
+            ->where('reminders.meta.last_page', 2)
         );
     }
 
@@ -42,7 +60,8 @@ class VehicleServiceReminderTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-reminders/Index')
-            ->has('reminders', 2)
+            ->has('reminders.data', 2)
+            ->where('reminders.meta.total', 2)
             ->where('selectedVehicleId', $vehicle->id)
         );
     }
@@ -235,7 +254,7 @@ class VehicleServiceReminderTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-reminders/Index')
-            ->where('reminders.0.is_overdue', false)
+            ->where('reminders.data.0.is_overdue', false)
         );
     }
 
@@ -267,7 +286,7 @@ class VehicleServiceReminderTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-reminders/Index')
-            ->where('reminders.0.is_overdue', true)
+            ->where('reminders.data.0.is_overdue', true)
         );
     }
 
@@ -292,7 +311,7 @@ class VehicleServiceReminderTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-reminders/Index')
-            ->where('reminders.0.is_overdue', false)
+            ->where('reminders.data.0.is_overdue', false)
         );
     }
 }

@@ -20,7 +20,40 @@ class VehicleTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicles/Index')
-            ->has('vehicles', 3)
+            ->has('vehicles.data', 3)
+            ->where('vehicles.meta.total', 3)
+            ->where('vehicles.meta.per_page', 5)
+        );
+    }
+
+    public function test_index_paginates_vehicles(): void
+    {
+        $this->withoutVite();
+        Vehicle::factory()->count(7)->create();
+
+        $response = $this->get('/vehicles');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicles/Index')
+            ->has('vehicles.data', 5)
+            ->where('vehicles.meta.total', 7)
+            ->where('vehicles.meta.last_page', 2)
+        );
+    }
+
+    public function test_index_returns_second_page(): void
+    {
+        $this->withoutVite();
+        Vehicle::factory()->count(7)->create();
+
+        $response = $this->get('/vehicles?page=2');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicles/Index')
+            ->has('vehicles.data', 2)
+            ->where('vehicles.meta.current_page', 2)
         );
     }
 

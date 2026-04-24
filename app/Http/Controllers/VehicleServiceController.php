@@ -25,7 +25,7 @@ class VehicleServiceController extends Controller
         }
 
         return Inertia::render('vehicle-services/Index', [
-            'services' => VehicleServiceResource::collection($query->get())->resolve(),
+            'services' => VehicleServiceResource::collection($query->paginate(5)),
             'vehicles' => VehicleResource::collection($vehicles)->resolve(),
             'selectedVehicleId' => $request->input('vehicle_id'),
         ]);

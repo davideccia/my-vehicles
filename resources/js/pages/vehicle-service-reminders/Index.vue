@@ -6,10 +6,10 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue';
 import { useDateFormat } from '@/composables/useDateFormat';
 import { create, destroy, edit, index } from '@/routes/vehicle-service-reminders';
 import { index as servicesIndex } from '@/routes/vehicle-services';
-import type { Vehicle, VehicleServiceReminder } from '@/types';
+import type { Paginated, Vehicle, VehicleServiceReminder } from '@/types';
 
-defineProps<{
-    reminders: VehicleServiceReminder[];
+const props = defineProps<{
+    reminders: Paginated<VehicleServiceReminder>;
     vehicles: Vehicle[];
     selectedVehicleId: string | null;
 }>();
@@ -33,6 +33,10 @@ function doDelete(): void {
 
 function onVehicleFilter(value: string | null): void {
     router.get(index.url(), { vehicle_id: value || undefined }, { preserveState: true, replace: true });
+}
+
+function goToPage(page: number): void {
+    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -68,7 +72,7 @@ function onVehicleFilter(value: string | null): void {
         </v-btn>
 
         <v-alert
-            v-if="reminders.some(r => r.is_overdue)"
+            v-if="reminders.data.some(r => r.is_overdue)"
             type="error"
             variant="tonal"
             class="mb-4"
@@ -76,13 +80,13 @@ function onVehicleFilter(value: string | null): void {
             {{ t('reminders.overdue_alert') }}
         </v-alert>
 
-        <v-alert v-if="reminders.length === 0" type="info" variant="tonal">
+        <v-alert v-if="reminders.meta.total === 0" type="info" variant="tonal">
             {{ t('reminders.no_reminders') }}
         </v-alert>
 
         <v-divider class="pb-4"/>
 
-        <v-card v-for="reminder in reminders" :key="reminder.id" class="mb-3" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
+        <v-card v-for="reminder in reminders.data" :key="reminder.id" class="mb-3" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
             <div style="min-width: 0;">
                 <v-card-title class="d-flex align-center ga-2 text-wrap">
                     <v-icon v-if="reminder.vehicle_service_type?.icon">{{ reminder.vehicle_service_type.icon }}</v-icon>
@@ -136,5 +140,13 @@ function onVehicleFilter(value: string | null): void {
                 </v-btn>
             </div>
         </v-card>
+
+        <v-pagination
+            v-if="reminders.meta.last_page > 1"
+            :model-value="reminders.meta.current_page"
+            :length="reminders.meta.last_page"
+            class="mt-2"
+            @update:model-value="goToPage"
+        />
     </v-container>
 </template>

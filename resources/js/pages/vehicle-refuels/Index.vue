@@ -5,10 +5,10 @@ import { useI18n } from 'vue-i18n';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
 import { useDateFormat } from '@/composables/useDateFormat';
 import { create, destroy, edit, index } from '@/routes/vehicle-refuels';
-import type { Vehicle, VehicleRefuel } from '@/types';
+import type { Paginated, Vehicle, VehicleRefuel } from '@/types';
 
-defineProps<{
-    refuels: VehicleRefuel[];
+const props = defineProps<{
+    refuels: Paginated<VehicleRefuel>;
     vehicles: Vehicle[];
     selectedVehicleId: string | null;
 }>();
@@ -32,6 +32,10 @@ function doDelete(): void {
 
 function onVehicleFilter(value: string | null): void {
     router.get(index.url(), { vehicle_id: value || undefined }, { preserveState: true, replace: true });
+}
+
+function goToPage(page: number): void {
+    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -63,11 +67,11 @@ function onVehicleFilter(value: string | null): void {
             {{ t('common.add') }}
         </v-btn>
 
-        <v-alert v-if="refuels.length === 0" type="info" variant="tonal">
+        <v-alert v-if="refuels.meta.total === 0" type="info" variant="tonal">
             {{ t('refuels.no_refuels') }}
         </v-alert>
 
-        <v-card v-for="refuel in refuels" :key="refuel.id" class="mb-3" rounded="lg">
+        <v-card v-for="refuel in refuels.data" :key="refuel.id" class="mb-3" rounded="lg">
             <div style="min-width: 0;">
                 <v-card-title class="text-wrap">{{ formatDate(refuel.date) }}</v-card-title>
                 <v-card-text class="pb-1">
@@ -101,5 +105,13 @@ function onVehicleFilter(value: string | null): void {
                 </v-btn>
             </div>
         </v-card>
+
+        <v-pagination
+            v-if="refuels.meta.last_page > 1"
+            :model-value="refuels.meta.current_page"
+            :length="refuels.meta.last_page"
+            class="mt-2"
+            @update:model-value="goToPage"
+        />
     </v-container>
 </template>

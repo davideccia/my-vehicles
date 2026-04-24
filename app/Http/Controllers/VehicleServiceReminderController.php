@@ -29,7 +29,7 @@ class VehicleServiceReminderController extends Controller
         }
 
         return Inertia::render('vehicle-service-reminders/Index', [
-            'reminders' => VehicleServiceReminderResource::collection($query->get())->resolve(),
+            'reminders' => VehicleServiceReminderResource::collection($query->paginate(5)),
             'vehicles' => VehicleResource::collection($vehicles)->resolve(),
             'selectedVehicleId' => $request->input('vehicle_id'),
         ]);

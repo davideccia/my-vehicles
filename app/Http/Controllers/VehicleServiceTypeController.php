@@ -14,7 +14,7 @@ class VehicleServiceTypeController extends Controller
     public function index(): Response
     {
         return Inertia::render('vehicle-service-types/Index', [
-            'serviceTypes' => VehicleServiceTypeResource::collection(VehicleServiceType::all())->resolve(),
+            'serviceTypes' => VehicleServiceTypeResource::collection(VehicleServiceType::paginate(5)),
         ]);
     }
 

@@ -22,9 +22,27 @@ class VehicleServiceTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-services/Index')
-            ->has('services', 3)
+            ->has('services.data', 3)
+            ->where('services.meta.total', 3)
+            ->where('services.meta.per_page', 5)
             ->has('vehicles')
             ->where('selectedVehicleId', null)
+        );
+    }
+
+    public function test_index_paginates_services(): void
+    {
+        $this->withoutVite();
+        VehicleService::factory()->count(7)->create();
+
+        $response = $this->get('/vehicle-services');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-services/Index')
+            ->has('services.data', 5)
+            ->where('services.meta.total', 7)
+            ->where('services.meta.last_page', 2)
         );
     }
 
@@ -40,7 +58,8 @@ class VehicleServiceTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-services/Index')
-            ->has('services', 2)
+            ->has('services.data', 2)
+            ->where('services.meta.total', 2)
             ->where('selectedVehicleId', $vehicle->id)
         );
     }

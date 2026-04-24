@@ -7,10 +7,10 @@ import { useDateFormat } from '@/composables/useDateFormat';
 import { index as remindersIndex } from '@/routes/vehicle-service-reminders';
 import { index as serviceTypesIndex } from '@/routes/vehicle-service-types';
 import { create, destroy, edit, index } from '@/routes/vehicle-services';
-import type { Vehicle, VehicleService } from '@/types';
+import type { Paginated, Vehicle, VehicleService } from '@/types';
 
-defineProps<{
-    services: VehicleService[];
+const props = defineProps<{
+    services: Paginated<VehicleService>;
     vehicles: Vehicle[];
     selectedVehicleId: string | null;
 }>();
@@ -34,6 +34,10 @@ function doDelete(): void {
 
 function onVehicleFilter(value: string | null): void {
     router.get(index.url(), { vehicle_id: value || undefined }, { preserveState: true, replace: true });
+}
+
+function goToPage(page: number): void {
+    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -75,11 +79,11 @@ function onVehicleFilter(value: string | null): void {
             {{ t('common.add') }}
         </v-btn>
 
-        <v-alert v-if="services.length === 0" type="info" variant="tonal">
+        <v-alert v-if="services.meta.total === 0" type="info" variant="tonal">
             {{ t('services.no_services') }}
         </v-alert>
 
-        <v-card v-for="service in services" :key="service.id" class="mb-3" rounded="lg">
+        <v-card v-for="service in services.data" :key="service.id" class="mb-3" rounded="lg">
             <div style="min-width: 0;">
                 <v-card-title class="text-wrap">
                     {{ formatDate(service.date) }}
@@ -122,5 +126,13 @@ function onVehicleFilter(value: string | null): void {
                 </v-btn>
             </div>
         </v-card>
+
+        <v-pagination
+            v-if="services.meta.last_page > 1"
+            :model-value="services.meta.current_page"
+            :length="services.meta.last_page"
+            class="mt-2"
+            @update:model-value="goToPage"
+        />
     </v-container>
 </template>

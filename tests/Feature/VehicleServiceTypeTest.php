@@ -20,7 +20,25 @@ class VehicleServiceTypeTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-service-types/Index')
-            ->has('serviceTypes', 3)
+            ->has('serviceTypes.data', 3)
+            ->where('serviceTypes.meta.total', 3)
+            ->where('serviceTypes.meta.per_page', 5)
+        );
+    }
+
+    public function test_index_paginates_service_types(): void
+    {
+        $this->withoutVite();
+        VehicleServiceType::factory()->count(7)->create();
+
+        $response = $this->get('/vehicle-service-types');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-service-types/Index')
+            ->has('serviceTypes.data', 5)
+            ->where('serviceTypes.meta.total', 7)
+            ->where('serviceTypes.meta.last_page', 2)
         );
     }
 

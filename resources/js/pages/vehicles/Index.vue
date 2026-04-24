@@ -4,11 +4,11 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
 import { useDateFormat } from '@/composables/useDateFormat';
-import { create, destroy, edit } from '@/routes/vehicles';
-import type { Vehicle } from '@/types';
+import { create, destroy, edit, index } from '@/routes/vehicles';
+import type { Paginated, Vehicle } from '@/types';
 
-defineProps<{
-    vehicles: Vehicle[];
+const props = defineProps<{
+    vehicles: Paginated<Vehicle>;
 }>();
 
 const { t } = useI18n();
@@ -26,6 +26,10 @@ function doDelete(): void {
     if (pendingVehicle.value) {
         router.delete(destroy.url(pendingVehicle.value));
     }
+}
+
+function goToPage(page: number): void {
+    router.get(index.url(), { page }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -45,11 +49,11 @@ function doDelete(): void {
             {{ t('common.add') }}
         </v-btn>
 
-        <v-alert v-if="vehicles.length === 0" type="info" variant="tonal" color="">
+        <v-alert v-if="vehicles.meta.total === 0" type="info" variant="tonal" color="">
             {{ t('vehicles.no_vehicles') }}
         </v-alert>
 
-        <v-card v-for="vehicle in vehicles" :key="vehicle.id" class="mb-3 d-flex" rounded="lg">
+        <v-card v-for="vehicle in vehicles.data" :key="vehicle.id" class="mb-3 d-flex" rounded="lg">
             <div class="d-flex flex-column align-center justify-center pa-2 border-s" :style="{ backgroundColor: vehicle.color }"/>
             <div class="d-flex flex-column flex-grow-1" style="min-width: 0;">
                 <v-card-title class="pb-1">
@@ -75,5 +79,13 @@ function doDelete(): void {
                 </div>
             </div>
         </v-card>
+
+        <v-pagination
+            v-if="vehicles.meta.last_page > 1"
+            :model-value="vehicles.meta.current_page"
+            :length="vehicles.meta.last_page"
+            class="mt-2"
+            @update:model-value="goToPage"
+        />
     </v-container>
 </template>

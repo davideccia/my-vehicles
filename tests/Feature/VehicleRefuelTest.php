@@ -21,9 +21,27 @@ class VehicleRefuelTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-refuels/Index')
-            ->has('refuels', 3)
+            ->has('refuels.data', 3)
+            ->where('refuels.meta.total', 3)
+            ->where('refuels.meta.per_page', 5)
             ->has('vehicles')
             ->where('selectedVehicleId', null)
+        );
+    }
+
+    public function test_index_paginates_refuels(): void
+    {
+        $this->withoutVite();
+        VehicleRefuel::factory()->count(7)->create();
+
+        $response = $this->get('/vehicle-refuels');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->has('refuels.data', 5)
+            ->where('refuels.meta.total', 7)
+            ->where('refuels.meta.last_page', 2)
         );
     }
 
@@ -39,7 +57,8 @@ class VehicleRefuelTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
             ->component('vehicle-refuels/Index')
-            ->has('refuels', 2)
+            ->has('refuels.data', 2)
+            ->where('refuels.meta.total', 2)
             ->where('selectedVehicleId', $vehicle->id)
         );
     }
