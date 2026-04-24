@@ -24,10 +24,20 @@ class VehicleServiceController extends Controller
             $query->where('vehicle_id', $request->vehicle_id);
         }
 
+        if ($request->filled('from')) {
+            $query->whereDate('date', '>=', $request->input('from'));
+        }
+
+        if ($request->filled('to')) {
+            $query->whereDate('date', '<=', $request->input('to'));
+        }
+
         return Inertia::render('vehicle-services/Index', [
             'services' => VehicleServiceResource::collection($query->paginate(5)),
             'vehicles' => VehicleResource::collection($vehicles)->resolve(),
             'selectedVehicleId' => $request->input('vehicle_id'),
+            'selectedFrom' => $request->input('from'),
+            'selectedTo' => $request->input('to'),
         ]);
     }
 

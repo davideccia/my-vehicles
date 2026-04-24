@@ -46,19 +46,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $fiatPunto->vehicleRefuels()->createMany([
-            ['date' => '2025-12-10', 'odometer' => 50000, 'liters' => 40.0, 'unit_price' => 1.82, 'total_price' => 72.80],
-            ['date' => '2026-01-03', 'odometer' => 51200, 'liters' => 38.5, 'unit_price' => 1.79, 'total_price' => 68.92],
-            ['date' => '2026-01-28', 'odometer' => 52500, 'liters' => 42.0, 'unit_price' => 1.85, 'total_price' => 77.70],
-            ['date' => '2026-02-22', 'odometer' => 53800, 'liters' => 39.0, 'unit_price' => 1.80, 'total_price' => 70.20],
-            ['date' => '2026-03-14', 'odometer' => 55000, 'liters' => 41.5, 'unit_price' => 1.83, 'total_price' => 75.95],
-            ['date' => '2026-04-07', 'odometer' => 56300, 'liters' => 38.0, 'unit_price' => 1.78, 'total_price' => 67.64],
-            ['date' => '2026-04-01', 'odometer' => 57500, 'liters' => 40.0, 'unit_price' => 1.86, 'total_price' => 74.40],
-            ['date' => '2026-04-25', 'odometer' => 58700, 'liters' => 37.5, 'unit_price' => 1.81, 'total_price' => 67.88],
+            ['date' => now()->subMonths(2)->setDay(10)->toDateString(), 'odometer' => 50000, 'liters' => 40.0, 'unit_price' => 1.82, 'total_price' => 72.80],
+            ['date' => now()->subMonths(2)->setDay(11)->toDateString(), 'odometer' => 51200, 'liters' => 38.5, 'unit_price' => 1.79, 'total_price' => 68.92],
+            ['date' => now()->subMonths(2)->setDay(12)->toDateString(), 'odometer' => 52500, 'liters' => 42.0, 'unit_price' => 1.85, 'total_price' => 77.70],
+            ['date' => now()->subMonths()->setDay(1)->toDateString(), 'odometer' => 53800, 'liters' => 39.0, 'unit_price' => 1.80, 'total_price' => 70.20],
+            ['date' => now()->subMonths()->setDay(2)->toDateString(), 'odometer' => 55000, 'liters' => 41.5, 'unit_price' => 1.83, 'total_price' => 75.95],
+            ['date' => now()->subMonths()->setDay(3)->toDateString(), 'odometer' => 56300, 'liters' => 38.0, 'unit_price' => 1.78, 'total_price' => 67.64],
+            ['date' => now()->subMonths()->setDay(4)->toDateString(), 'odometer' => 57500, 'liters' => 40.0, 'unit_price' => 1.86, 'total_price' => 74.40],
+            ['date' => now()->subMonths()->setDay(5)->toDateString(), 'odometer' => 58700, 'liters' => 37.5, 'unit_price' => 1.81, 'total_price' => 67.88],
         ]);
 
         $fiatPunto->vehicleServices()->create([
             'vehicle_service_type_id' => $tagliando->id,
-            'date' => '2025-01-10',
+            'date' => now()->subMonths()->setDay(10)->toDateString(),
             'total_paid' => 150,
             'odometer' => 50000,
         ]);
@@ -80,19 +80,19 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $alfaGiulia->vehicleRefuels()->createMany([
-            ['date' => '2025-11-08', 'odometer' => 80000, 'liters' => 45.0, 'unit_price' => 1.82, 'total_price' => 81.90],
-            ['date' => '2025-12-01', 'odometer' => 81500, 'liters' => 43.5, 'unit_price' => 1.79, 'total_price' => 77.87],
-            ['date' => '2025-12-25', 'odometer' => 83200, 'liters' => 46.0, 'unit_price' => 1.85, 'total_price' => 85.10],
-            ['date' => '2026-01-20', 'odometer' => 85000, 'liters' => 44.0, 'unit_price' => 1.80, 'total_price' => 79.20],
-            ['date' => '2026-02-12', 'odometer' => 87000, 'liters' => 47.5, 'unit_price' => 1.83, 'total_price' => 86.93],
-            ['date' => '2026-03-05', 'odometer' => 89000, 'liters' => 45.0, 'unit_price' => 1.78, 'total_price' => 80.10],
-            ['date' => '2026-04-02', 'odometer' => 91000, 'liters' => 46.5, 'unit_price' => 1.86, 'total_price' => 86.49],
-            ['date' => '2026-04-28', 'odometer' => 92500, 'liters' => 44.0, 'unit_price' => 1.81, 'total_price' => 79.64],
+            ['date' => now()->subMonths(2)->setDay(10)->toDateString(), 'odometer' => 80000, 'liters' => 45.0, 'unit_price' => 1.82, 'total_price' => 81.90],
+            ['date' => now()->subMonths(2)->setDay(11)->toDateString(), 'odometer' => 81500, 'liters' => 43.5, 'unit_price' => 1.79, 'total_price' => 77.87],
+            ['date' => now()->subMonths(2)->setDay(12)->toDateString(), 'odometer' => 83200, 'liters' => 46.0, 'unit_price' => 1.85, 'total_price' => 85.10],
+            ['date' => now()->subMonths()->setDay(1)->toDateString(), 'odometer' => 85000, 'liters' => 44.0, 'unit_price' => 1.80, 'total_price' => 79.20],
+            ['date' => now()->subMonths()->setDay(2)->toDateString(), 'odometer' => 87000, 'liters' => 47.5, 'unit_price' => 1.83, 'total_price' => 86.93],
+            ['date' => now()->subMonths()->setDay(3)->toDateString(), 'odometer' => 89000, 'liters' => 45.0, 'unit_price' => 1.78, 'total_price' => 80.10],
+            ['date' => now()->subMonths()->setDay(4)->toDateString(), 'odometer' => 91000, 'liters' => 46.5, 'unit_price' => 1.86, 'total_price' => 86.49],
+            ['date' => now()->subMonths()->setDay(5)->toDateString(), 'odometer' => 92500, 'liters' => 44.0, 'unit_price' => 1.81, 'total_price' => 79.64],
         ]);
 
         $alfaGiulia->vehicleServices()->create([
             'vehicle_service_type_id' => $tagliando->id,
-            'date' => '2025-01-08',
+            'date' => now()->subMonths()->setDay(8)->toDateString(),
             'total_paid' => 250,
             'odometer' => 80000,
         ]);

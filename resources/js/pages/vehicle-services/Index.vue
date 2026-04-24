@@ -3,6 +3,7 @@ import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import DatePickerField from '@/components/DatePickerField.vue';
 import { useDateFormat } from '@/composables/useDateFormat';
 import { index as remindersIndex } from '@/routes/vehicle-service-reminders';
 import { index as serviceTypesIndex } from '@/routes/vehicle-service-types';
@@ -13,6 +14,8 @@ const props = defineProps<{
     services: Paginated<VehicleService>;
     vehicles: Vehicle[];
     selectedVehicleId: string | null;
+    selectedFrom: string | null;
+    selectedTo: string | null;
 }>();
 
 const { t } = useI18n();
@@ -20,6 +23,9 @@ const { formatDate } = useDateFormat();
 
 const showConfirm = ref(false);
 const pendingService = ref<VehicleService | null>(null);
+
+const fromDate = ref<string>(props.selectedFrom ?? '');
+const toDate = ref<string>(props.selectedTo ?? '');
 
 function promptDelete(service: VehicleService): void {
     pendingService.value = service;
@@ -33,11 +39,21 @@ function doDelete(): void {
 }
 
 function onVehicleFilter(value: string | null): void {
-    router.get(index.url(), { vehicle_id: value || undefined }, { preserveState: true, replace: true });
+    router.get(index.url(), { vehicle_id: value || undefined, from: fromDate.value || undefined, to: toDate.value || undefined }, { preserveState: true, replace: true });
+}
+
+function onFromFilter(value: string): void {
+    fromDate.value = value;
+    router.get(index.url(), { vehicle_id: props.selectedVehicleId || undefined, from: value || undefined, to: toDate.value || undefined }, { preserveState: true, replace: true });
+}
+
+function onToFilter(value: string): void {
+    toDate.value = value;
+    router.get(index.url(), { vehicle_id: props.selectedVehicleId || undefined, from: fromDate.value || undefined, to: value || undefined }, { preserveState: true, replace: true });
 }
 
 function goToPage(page: number): void {
-    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined }, { preserveState: true, replace: true });
+    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined, from: props.selectedFrom || undefined, to: props.selectedTo || undefined }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -74,6 +90,23 @@ function goToPage(page: number): void {
             clearable
             @update:model-value="onVehicleFilter"
         />
+
+        <v-row class="mb-2">
+            <v-col cols="6" class="pe-1">
+                <DatePickerField
+                    :model-value="fromDate"
+                    :label="t('services.from')"
+                    @update:model-value="onFromFilter"
+                />
+            </v-col>
+            <v-col cols="6" class="ps-1">
+                <DatePickerField
+                    :model-value="toDate"
+                    :label="t('services.to')"
+                    @update:model-value="onToFilter"
+                />
+            </v-col>
+        </v-row>
 
         <v-btn color="primary" block class="mb-4" prepend-icon="mdi-plus" @click="router.visit(create.url())">
             {{ t('common.add') }}

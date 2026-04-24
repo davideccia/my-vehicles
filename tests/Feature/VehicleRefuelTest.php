@@ -63,6 +63,96 @@ class VehicleRefuelTest extends TestCase
         );
     }
 
+    public function test_index_returns_selected_from_and_to_as_null_by_default(): void
+    {
+        $this->withoutVite();
+
+        $response = $this->get('/vehicle-refuels');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->where('selectedFrom', null)
+            ->where('selectedTo', null)
+        );
+    }
+
+    public function test_index_filters_by_from_date(): void
+    {
+        $this->withoutVite();
+        VehicleRefuel::factory()->create(['date' => '2024-01-10']);
+        VehicleRefuel::factory()->create(['date' => '2024-03-15']);
+        VehicleRefuel::factory()->create(['date' => '2024-06-01']);
+
+        $response = $this->get('/vehicle-refuels?from=2024-03-01');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->has('refuels.data', 2)
+            ->where('refuels.meta.total', 2)
+            ->where('selectedFrom', '2024-03-01')
+        );
+    }
+
+    public function test_index_filters_by_to_date(): void
+    {
+        $this->withoutVite();
+        VehicleRefuel::factory()->create(['date' => '2024-01-10']);
+        VehicleRefuel::factory()->create(['date' => '2024-03-15']);
+        VehicleRefuel::factory()->create(['date' => '2024-06-01']);
+
+        $response = $this->get('/vehicle-refuels?to=2024-03-31');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->has('refuels.data', 2)
+            ->where('refuels.meta.total', 2)
+            ->where('selectedTo', '2024-03-31')
+        );
+    }
+
+    public function test_index_filters_by_from_and_to_date(): void
+    {
+        $this->withoutVite();
+        VehicleRefuel::factory()->create(['date' => '2024-01-10']);
+        VehicleRefuel::factory()->create(['date' => '2024-03-15']);
+        VehicleRefuel::factory()->create(['date' => '2024-06-01']);
+
+        $response = $this->get('/vehicle-refuels?from=2024-02-01&to=2024-04-30');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->has('refuels.data', 1)
+            ->where('refuels.meta.total', 1)
+            ->where('selectedFrom', '2024-02-01')
+            ->where('selectedTo', '2024-04-30')
+        );
+    }
+
+    public function test_index_combines_vehicle_and_date_filters(): void
+    {
+        $this->withoutVite();
+        $vehicle = Vehicle::factory()->create();
+        VehicleRefuel::factory()->create(['vehicle_id' => $vehicle->id, 'date' => '2024-03-15']);
+        VehicleRefuel::factory()->create(['vehicle_id' => $vehicle->id, 'date' => '2024-06-01']);
+        VehicleRefuel::factory()->create(['date' => '2024-03-20']);
+
+        $response = $this->get('/vehicle-refuels?vehicle_id='.$vehicle->id.'&from=2024-01-01&to=2024-04-30');
+
+        $response->assertOk();
+        $response->assertInertia(fn ($page) => $page
+            ->component('vehicle-refuels/Index')
+            ->has('refuels.data', 1)
+            ->where('refuels.meta.total', 1)
+            ->where('selectedVehicleId', $vehicle->id)
+            ->where('selectedFrom', '2024-01-01')
+            ->where('selectedTo', '2024-04-30')
+        );
+    }
+
     public function test_create_page_is_accessible(): void
     {
         $this->withoutVite();
