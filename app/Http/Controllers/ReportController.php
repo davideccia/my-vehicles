@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
-use App\Services\Report;
+use App\Services\Reports;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -24,13 +24,13 @@ class ReportController extends Controller
         $to = $validated['to'] ?? now()->endOfWeek()->toDateString();
 
         return Inertia::render('Reports', [
-            'fuel_costs' => Report::fuelCosts($from, $to, ($validated['vehicle_id'] ?? null)),
             'vehicles' => VehicleResource::collection(Vehicle::all())->resolve(),
             'filters' => [
                 'vehicle_id' => $validated['vehicle_id'] ?? null,
                 'from' => $from,
                 'to' => $to,
             ],
+            'fuel_costs' => Reports::init($from, $to, ($validated['vehicle_id'] ?? null))->vehiclesFuelCosts(),
         ]);
     }
 }

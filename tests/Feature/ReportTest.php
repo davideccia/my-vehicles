@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Vehicle;
 use App\Models\VehicleRefuel;
-use App\Services\Report;
+use App\Services\Reports;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,7 +28,7 @@ class ReportTest extends TestCase
             'unit_price' => 1.90,
         ]);
 
-        $result = Report::fuelCosts('2024-01-01', '2024-01-31', $vehicle);
+        $result = Reports::init('2024-01-01', '2024-01-31', $vehicle)->vehiclesFuelCosts();
 
         // Only 2 labels, not 31
         $this->assertCount(2, $result['labels']);
@@ -53,7 +53,7 @@ class ReportTest extends TestCase
             'unit_price' => 1.90,
         ]);
 
-        $result = Report::fuelCosts('2024-01-01', '2024-01-31');
+        $result = Reports::init('2024-01-01', '2024-01-31')->vehiclesFuelCosts();
 
         // 2 dates total (Jan 5 and Jan 10)
         $this->assertCount(2, $result['labels']);
@@ -77,7 +77,7 @@ class ReportTest extends TestCase
     {
         Vehicle::factory()->create();
 
-        $result = Report::fuelCosts('2024-01-01', '2024-01-31');
+        $result = Reports::init('2024-01-01', '2024-01-31')->vehiclesFuelCosts();
 
         $this->assertCount(0, $result['labels']);
         $this->assertCount(0, $result['datasets']);
@@ -91,7 +91,7 @@ class ReportTest extends TestCase
         VehicleRefuel::factory()->create(['vehicle_id' => $vehicle1->id, 'date' => '2024-01-05']);
         VehicleRefuel::factory()->create(['vehicle_id' => $vehicle2->id, 'date' => '2024-01-10']);
 
-        $result = Report::fuelCosts('2024-01-01', '2024-01-31', $vehicle1);
+        $result = Reports::init('2024-01-01', '2024-01-31', $vehicle1)->vehiclesFuelCosts();
 
         $this->assertCount(1, $result['labels']);
         $this->assertCount(1, $result['datasets']);

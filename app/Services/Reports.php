@@ -7,12 +7,19 @@ use App\Models\VehicleRefuel;
 use Carbon\CarbonPeriodImmutable;
 use Illuminate\Support\Collection;
 
-class Report
+class Reports
 {
-    public static function fuelCosts(string $from, string $to, string|Vehicle|null $vehicle = null): array
+    public function __construct(private string $from, private string $to, private string|Vehicle|null $vehicle = null) {}
+
+    public static function init(string $from, string $to, string|Vehicle|null $vehicle = null): static
+    {
+        return new static($from, $to, $vehicle);
+    }
+
+    public function vehiclesFuelCosts(): array
     {
         $format = __('app.date_format');
-        $period = CarbonPeriodImmutable::create($from, $to);
+        $period = CarbonPeriodImmutable::create($this->from, $this->to);
 
         $query = VehicleRefuel::with(['vehicle'])
             ->orderBy('date')
@@ -20,9 +27,9 @@ class Report
             ->whereBetween('date', [$period->getStartDate()->toDateString(), $period->getEndDate()->toDateString()])
             ->selectRaw('MAX(unit_price) as max_unit_price, date, vehicle_id');
 
-        if ($vehicle !== null) {
-            $vehicle = is_string($vehicle) ? Vehicle::find($vehicle) : $vehicle;
-            $query->where('vehicle_id', $vehicle->id);
+        if ($this->vehicle !== null) {
+            $vehicleID = $this->vehicle instanceof Vehicle ? $this->vehicle->id : $this->vehicle;
+            $query->where('vehicle_id', $vehicleID);
         }
 
         $refuels = $query->get();
