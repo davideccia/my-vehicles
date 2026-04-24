@@ -105,7 +105,8 @@ function goToPage(page: number): void {
         </v-alert>
 
         <v-card v-for="refuel in refuels.data" :key="refuel.id" class="mb-3" rounded="lg">
-            <div style="min-width: 0;">
+            <div class="d-flex align-start">
+            <div style="min-width: 0; flex: 1;">
                 <v-card-title class="text-wrap">{{ formatDate(refuel.date) }}</v-card-title>
                 <v-card-text class="pb-1">
                     <v-chip label :color="refuel.vehicle.color" size="small">{{ refuel.vehicle.brand }} {{ refuel.vehicle.model }} ({{ refuel.vehicle.plate_number }})</v-chip>
@@ -128,14 +129,10 @@ function goToPage(page: number): void {
                     </v-row>
                 </v-card-text>
             </div>
-            <div class="d-flex pa-2 gap-2">
-                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_refuel: refuel.id }))">
-                    {{ t('common.edit') }}
-                </v-btn>
-                &nbsp;
-                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(refuel)">
-                    {{ t('common.delete') }}
-                </v-btn>
+            <div class="d-flex pa-1 ga-2 align-start pt-2">
+                <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url({ vehicle_refuel: refuel.id }))" />
+                <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(refuel)" />
+            </div>
             </div>
         </v-card>
 

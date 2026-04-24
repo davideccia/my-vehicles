@@ -56,20 +56,17 @@ function goToPage(page: number): void {
         </v-alert>
 
         <v-card v-for="serviceType in serviceTypes.data" :key="serviceType.id" class="mb-3" rounded="lg">
-            <div style="min-width: 0;">
-                <v-card-title class="d-flex align-center ga-2 text-wrap">
-                    <v-icon>{{ serviceType.icon }}</v-icon>
-                    {{ serviceType.label }}
-                </v-card-title>
-            </div>
-            <div class="d-flex pa-2 gap-2">
-                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service_type: serviceType.id }))">
-                    {{ t('common.edit') }}
-                </v-btn>
-                &nbsp;
-                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(serviceType)">
-                    {{ t('common.delete') }}
-                </v-btn>
+            <div class="d-flex align-start">
+                <div style="min-width: 0; flex: 1;">
+                    <v-card-title class="d-flex align-center ga-2 text-wrap">
+                        <v-icon>{{ serviceType.icon }}</v-icon>
+                        {{ serviceType.label }}
+                    </v-card-title>
+                </div>
+                <div class="d-flex pa-1 ga-2 align-start pt-2">
+                    <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url({ vehicle_service_type: serviceType.id }))" />
+                    <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(serviceType)" />
+                </div>
             </div>
         </v-card>
 

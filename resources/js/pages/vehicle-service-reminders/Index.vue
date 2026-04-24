@@ -87,7 +87,8 @@ function goToPage(page: number): void {
         <v-divider class="pb-4"/>
 
         <v-card v-for="reminder in reminders.data" :key="reminder.id" class="mb-3" variant="tonal" :color="reminder.is_overdue ? 'error' : undefined" rounded="lg">
-            <div style="min-width: 0;">
+            <div class="d-flex align-start">
+            <div style="min-width: 0; flex: 1;">
                 <v-card-title class="d-flex align-center ga-2 text-wrap">
                     <v-icon v-if="reminder.vehicle_service_type?.icon">{{ reminder.vehicle_service_type.icon }}</v-icon>
                     {{ reminder.vehicle_service_type?.label }}
@@ -130,14 +131,10 @@ function goToPage(page: number): void {
                         </v-row>
                 </v-card-text>
             </div>
-            <div class="d-flex pa-2 gap-2">
-                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))">
-                    {{ t('common.edit') }}
-                </v-btn>
-                &nbsp;
-                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(reminder)">
-                    {{ t('common.delete') }}
-                </v-btn>
+            <div class="d-flex pa-1 ga-2 align-start pt-2">
+                <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url({ vehicle_service_reminder: reminder.id }))" />
+                <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(reminder)" />
+            </div>
             </div>
         </v-card>
 

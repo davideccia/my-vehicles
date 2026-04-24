@@ -117,7 +117,8 @@ function goToPage(page: number): void {
         </v-alert>
 
         <v-card v-for="service in services.data" :key="service.id" class="mb-3" rounded="lg">
-            <div style="min-width: 0;">
+            <div class="d-flex align-start">
+            <div style="min-width: 0; flex: 1;">
                 <v-card-title class="text-wrap">
                     {{ formatDate(service.date) }}
                 </v-card-title>
@@ -149,14 +150,10 @@ function goToPage(page: number): void {
                     </div>
                 </v-card-text>
             </div>
-            <div class="d-flex pa-2 gap-2">
-                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service: service.id }))">
-                    {{ t('common.edit') }}
-                </v-btn>
-                &nbsp;
-                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(service)">
-                    {{ t('common.delete') }}
-                </v-btn>
+            <div class="d-flex pa-1 ga-2 align-start pt-2">
+                <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url({ vehicle_service: service.id }))" />
+                <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(service)" />
+            </div>
             </div>
         </v-card>
 

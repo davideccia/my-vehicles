@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\VehicleFuelTypeEnum;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleServiceType;
@@ -37,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'year' => 2019,
             'purchase_date' => '2019-06-01',
             'color' => colority()->random()->toHex()->getValueColor(),
-            'fuel_type' => 'diesel',
+            'fuel_type' => VehicleFuelTypeEnum::DIESEL,
         ]);
 
         $fiatPunto->vehicleServiceReminders()->create([
@@ -71,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'year' => 2021,
             'purchase_date' => '2021-03-15',
             'color' => colority()->random()->toHex()->getValueColor(),
-            'fuel_type' => 'diesel',
+            'fuel_type' => VehicleFuelTypeEnum::GASOLINE,
         ]);
 
         $alfaGiulia->vehicleServiceReminders()->create([

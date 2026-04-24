@@ -68,15 +68,10 @@ function goToPage(page: number): void {
                 <v-card-text v-if="vehicle.purchase_date">
                     {{ t('vehicles.purchase_date') }}: {{ formatDate(vehicle.purchase_date) }}
                 </v-card-text>
-                <div class="d-flex pa-2 gap-2">
-                    <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url(vehicle))">
-                        {{ t('common.edit') }}
-                    </v-btn>
-                    &nbsp;
-                    <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(vehicle)">
-                        {{ t('common.delete') }}
-                    </v-btn>
-                </div>
+            </div>
+            <div class="d-flex pa-1 ga-2 align-start pt-2">
+                <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url(vehicle))" />
+                <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(vehicle)" />
             </div>
         </v-card>
 
