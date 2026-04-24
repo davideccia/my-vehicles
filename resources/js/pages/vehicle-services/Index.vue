@@ -3,16 +3,19 @@ import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import DatePickerField from '@/components/DatePickerField.vue';
 import { useDateFormat } from '@/composables/useDateFormat';
 import { index as remindersIndex } from '@/routes/vehicle-service-reminders';
 import { index as serviceTypesIndex } from '@/routes/vehicle-service-types';
 import { create, destroy, edit, index } from '@/routes/vehicle-services';
-import type { Vehicle, VehicleService } from '@/types';
+import type { Paginated, Vehicle, VehicleService } from '@/types';
 
-defineProps<{
-    services: VehicleService[];
+const props = defineProps<{
+    services: Paginated<VehicleService>;
     vehicles: Vehicle[];
     selectedVehicleId: string | null;
+    selectedFrom: string | null;
+    selectedTo: string | null;
 }>();
 
 const { t } = useI18n();
@@ -20,6 +23,9 @@ const { formatDate } = useDateFormat();
 
 const showConfirm = ref(false);
 const pendingService = ref<VehicleService | null>(null);
+
+const fromDate = ref<string>(props.selectedFrom ?? '');
+const toDate = ref<string>(props.selectedTo ?? '');
 
 function promptDelete(service: VehicleService): void {
     pendingService.value = service;
@@ -33,7 +39,21 @@ function doDelete(): void {
 }
 
 function onVehicleFilter(value: string | null): void {
-    router.get(index.url(), { vehicle_id: value || undefined }, { preserveState: true, replace: true });
+    router.get(index.url(), { vehicle_id: value || undefined, from: fromDate.value || undefined, to: toDate.value || undefined }, { preserveState: true, replace: true });
+}
+
+function onFromFilter(value: string): void {
+    fromDate.value = value;
+    router.get(index.url(), { vehicle_id: props.selectedVehicleId || undefined, from: value || undefined, to: toDate.value || undefined }, { preserveState: true, replace: true });
+}
+
+function onToFilter(value: string): void {
+    toDate.value = value;
+    router.get(index.url(), { vehicle_id: props.selectedVehicleId || undefined, from: fromDate.value || undefined, to: value || undefined }, { preserveState: true, replace: true });
+}
+
+function goToPage(page: number): void {
+    router.get(index.url(), { page, vehicle_id: props.selectedVehicleId || undefined, from: props.selectedFrom || undefined, to: props.selectedTo || undefined }, { preserveState: true, replace: true });
 }
 </script>
 
@@ -71,16 +91,34 @@ function onVehicleFilter(value: string | null): void {
             @update:model-value="onVehicleFilter"
         />
 
+        <v-row class="mb-2">
+            <v-col cols="6" class="pe-1">
+                <DatePickerField
+                    :model-value="fromDate"
+                    :label="t('services.from')"
+                    @update:model-value="onFromFilter"
+                />
+            </v-col>
+            <v-col cols="6" class="ps-1">
+                <DatePickerField
+                    :model-value="toDate"
+                    :label="t('services.to')"
+                    @update:model-value="onToFilter"
+                />
+            </v-col>
+        </v-row>
+
         <v-btn color="primary" block class="mb-4" prepend-icon="mdi-plus" @click="router.visit(create.url())">
             {{ t('common.add') }}
         </v-btn>
 
-        <v-alert v-if="services.length === 0" type="info" variant="tonal">
+        <v-alert v-if="services.meta.total === 0" type="info" variant="tonal">
             {{ t('services.no_services') }}
         </v-alert>
 
-        <v-card v-for="service in services" :key="service.id" class="mb-3" rounded="lg">
-            <div style="min-width: 0;">
+        <v-card v-for="service in services.data" :key="service.id" class="mb-3" rounded="lg">
+            <div class="d-flex align-start">
+            <div style="min-width: 0; flex: 1;">
                 <v-card-title class="text-wrap">
                     {{ formatDate(service.date) }}
                 </v-card-title>
@@ -112,15 +150,19 @@ function onVehicleFilter(value: string | null): void {
                     </div>
                 </v-card-text>
             </div>
-            <div class="d-flex pa-2 gap-2">
-                <v-btn class="" style="flex: 1" prepend-icon="mdi-pencil" rounded="lg" variant="tonal" @click="router.visit(edit.url({ vehicle_service: service.id }))">
-                    {{ t('common.edit') }}
-                </v-btn>
-                &nbsp;
-                <v-btn style="flex: 1" prepend-icon="mdi-delete" rounded="lg" variant="elevated" color="error" @click="promptDelete(service)">
-                    {{ t('common.delete') }}
-                </v-btn>
+            <div class="d-flex pa-1 ga-2 align-start pt-2">
+                <v-btn icon="mdi-pencil" variant="tonal" size="small" @click="router.visit(edit.url({ vehicle_service: service.id }))" />
+                <v-btn icon="mdi-delete" variant="tonal" color="error" size="small" @click="promptDelete(service)" />
+            </div>
             </div>
         </v-card>
+
+        <v-pagination
+            v-if="services.meta.last_page > 1"
+            :model-value="services.meta.current_page"
+            :length="services.meta.last_page"
+            class="mt-2"
+            @update:model-value="goToPage"
+        />
     </v-container>
 </template>
