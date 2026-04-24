@@ -2489,16 +2489,16 @@
         },
         {
             "name": "nativephp/mobile",
-            "version": "3.2.3",
+            "version": "3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NativePHP/mobile-air.git",
-                "reference": "adbf8f78fd52c7e74c1dfc82f36b44b61357d3b6"
+                "reference": "feea2065211b284b5025fda415c3e5b2e9f6a166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NativePHP/mobile-air/zipball/adbf8f78fd52c7e74c1dfc82f36b44b61357d3b6",
-                "reference": "adbf8f78fd52c7e74c1dfc82f36b44b61357d3b6",
+                "url": "https://api.github.com/repos/NativePHP/mobile-air/zipball/feea2065211b284b5025fda415c3e5b2e9f6a166",
+                "reference": "feea2065211b284b5025fda415c3e5b2e9f6a166",
                 "shasum": ""
             },
             "require": {
@@ -2566,9 +2566,9 @@
             ],
             "support": {
                 "issues": "https://github.com/NativePHP/mobile-air/issues",
-                "source": "https://github.com/NativePHP/mobile-air/tree/3.2.3"
+                "source": "https://github.com/NativePHP/mobile-air/tree/3.2.4"
             },
-            "time": "2026-04-10T19:30:15+00:00"
+            "time": "2026-04-23T20:43:29+00:00"
         },
         {
             "name": "nesbot/carbon",
